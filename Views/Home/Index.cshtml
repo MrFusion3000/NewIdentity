@@ -1,0 +1,16 @@
+﻿@model string
+
+<h1 class="bg-info text-white">Index</h1>
+@Model
+
+@if (User?.Identity?.IsAuthenticated ?? false)
+{
+    <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+}
+
+<div class="badge-light">
+    <h2>User Administration Menu</h2>
+    <p><a href="/Admin" target="_blank">Admin</a></p>
+    <p><a href="/Role" target="_blank">Role</a></p>
+    <p><a href="/Claims" target="_blank">Claims</a></p>
+</div>
