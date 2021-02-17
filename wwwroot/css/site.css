@@ -11,8 +11,10 @@ h1 {
     font-family: 'Reggae One', cursive;
 }
 
-div {
+.roundBorder {
+    border: 1px solid black;
     border-radius: 25px;
+    padding: 5px;
 }
 
 /* Provide sufficient contrast against white background */

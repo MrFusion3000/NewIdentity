@@ -4,11 +4,12 @@
 @Model
 
 @if (User?.Identity?.IsAuthenticated ?? false)
-{
+{ <p>
     <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+</p>
 }
 
-<div class="badge-light">
+<div class="badge-light roundBorder">
     <h2>User Administration Menu</h2>
     <p><a href="/Admin" target="_blank">Admin</a></p>
     <p><a href="/Role" target="_blank">Role</a></p>
