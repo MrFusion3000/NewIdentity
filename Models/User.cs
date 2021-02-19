@@ -18,6 +18,10 @@ namespace Identity.Models
         [Required]
         public string Password { get; set; }
 
+        public int CountryID { get; set; }
+
+        public int CityId { get; set; }
+
         public Country Country { get; set; }
 
         public City City { get; set; }

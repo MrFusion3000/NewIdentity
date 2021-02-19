@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System;
 using Identity.Email;
+using Identity.Views.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Controllers
 {
@@ -13,19 +15,20 @@ namespace Identity.Controllers
         private IPasswordHasher<AppUser> passwordHasher;
         private IPasswordValidator<AppUser> passwordValidator;
         private IUserValidator<AppUser> userValidator;
-
+        private readonly AppIdentityDbContext _context;
         /*public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
         {
             userManager = usrMgr;
             passwordHasher = passwordHash;
         }*/
 
-        public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash, IPasswordValidator<AppUser> passwordVal, IUserValidator<AppUser> userValid)
+        public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash, IPasswordValidator<AppUser> passwordVal, IUserValidator<AppUser> userValid, AppIdentityDbContext context)
         {
             userManager = usrMgr;
             passwordHasher = passwordHash;
             passwordValidator = passwordVal;
             userValidator = userValid;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -43,7 +46,8 @@ namespace Identity.Controllers
                 AppUser appUser = new AppUser
                 {
                     UserName = user.Name,
-                    Email = user.Email
+                    Email = user.Email,
+                    CityId = user.CityId
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
@@ -98,6 +102,10 @@ namespace Identity.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
+            ViewData["CountryList"] = await _context.Countries
+                .FirstOrDefaultAsync( c => c.Id == "1");
+                    
+
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
                 return View(user);

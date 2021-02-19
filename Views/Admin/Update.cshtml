@@ -1,4 +1,5 @@
 ﻿@model AppUser
+@using Identity.Views.ViewModels;
 
 <h1 class="bg-info text-white">Update User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
@@ -17,13 +18,14 @@
         <label for="password">Password</label>
         <input name="password" class="form-control" />
     </div>
-    <div class="form-group">
-        <label asp-for="Country"></label>
-        <select asp-for="Country" class="form-control" asp-items="@new SelectList(Model.Country.CountryName)">
+    @*<div class="form-group">
+        <label asp-for="CountryId"></label>
+        <select asp-for="CountryId" class="form-control" asp-items="@new SelectList(#)">
             <option selected disabled value="Select">Select Country</option>
         </select>
-    </div>
+    </div>*@
 
+    <h1>@ViewData["CountryList"]</h1>
 
     @*<div class="form-group">
             <label asp-for="Country"></label>
