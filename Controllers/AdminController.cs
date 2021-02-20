@@ -6,6 +6,7 @@ using System;
 using Identity.Email;
 using Identity.Views.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Identity.Controllers
 {
@@ -15,7 +16,8 @@ namespace Identity.Controllers
         private IPasswordHasher<AppUser> passwordHasher;
         private IPasswordValidator<AppUser> passwordValidator;
         private IUserValidator<AppUser> userValidator;
-        private readonly AppIdentityDbContext _context;
+        private AppIdentityDbContext _context;
+
         /*public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
         {
             userManager = usrMgr;
@@ -33,7 +35,9 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            return View(userManager.Users);
+            return View(_context.Cities.ToList());
+
+            //return View(userManager.Users);
         }
 
         public ViewResult Create() => View();
@@ -47,7 +51,8 @@ namespace Identity.Controllers
                 {
                     UserName = user.Name,
                     Email = user.Email,
-                    CityId = user.CityId
+                    CityId = user.CityId,
+                    CountryID = user.CountryID
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
@@ -103,7 +108,7 @@ namespace Identity.Controllers
         public async Task<IActionResult> Update(string id)
         {
             ViewData["CountryList"] = await _context.Countries
-                .FirstOrDefaultAsync( c => c.Id == "1");
+                .FirstOrDefaultAsync( c => c.ID == 1);
                     
 
             AppUser user = await userManager.FindByIdAsync(id);

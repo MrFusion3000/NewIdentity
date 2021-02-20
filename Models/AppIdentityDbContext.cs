@@ -10,47 +10,52 @@ namespace Identity.Models
 
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<CountryCity> CountryCities { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        //    string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
-        //    string ROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
+            modelBuilder.Entity<Country>().ToTable("Country");
+            modelBuilder.Entity<City>().ToTable("City");
+            modelBuilder.Entity<CountryCity>().ToTable("CountryCity");
 
-        //    //seed admin role
-        //    builder.Entity<IdentityRole>().HasData(new IdentityRole
-        //    {
-        //        Name = "SuperAdmin",
-        //        NormalizedName = "SuperAdmin",
-        //        Id = ROLE_ID,
-        //        ConcurrencyStamp = ROLE_ID
-        //    });
+            string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
+            string ROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
 
-        //    //create user
-        //    var appUser = new AppUser
-        //    {
-        //        Id = ADMIN_ID,
-        //        Email = "nico@gmail.com",
-        //        EmailConfirmed = true,
-        //        CountryId = 1,
-        //        CityId = 1,
-        //        UserName = "nico" 
-        //   };
+            //seed admin role
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Name = "SuperAdmin",
+                NormalizedName = "SuperAdmin",
+                Id = ROLE_ID,
+                ConcurrencyStamp = ROLE_ID
+            });
 
-        //    //set user password
-        //    PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();
-        //    appUser.PasswordHash = ph.HashPassword(appUser, "mypassword_ ?");
+            //create user
+            var appUser = new AppUser
+            {
+                Id = ADMIN_ID,
+                Email = "nico@gmail.com",
+                EmailConfirmed = true,
+                CityId = 1,
+                UserName = "nico" 
+           };
 
-        //    //seed user
-        //    builder.Entity<AppUser>().HasData(appUser);
+            //set user password
+            PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();
+            appUser.PasswordHash = ph.HashPassword(appUser, "mypassword_ ?");
 
-        //    //set user role to admin
-        //    builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-        //    {
-        //        RoleId = ROLE_ID,
-        //        UserId = ADMIN_ID
-        //    });
-        //}
+            //seed user
+            modelBuilder.Entity<AppUser>().HasData(appUser);
+
+            //set user role to admin
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID
+            });
+        }
     }
 
 }
