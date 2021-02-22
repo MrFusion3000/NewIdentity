@@ -35,34 +35,39 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            var cityList = _context.Cities.FirstOrDefaultAsync(c => c.CityID == 1);
-            ViewData["CountryList"] = cityList; 
+            //ViewData["CountryList"] = country; 
             
             return View(userManager.Users);
         }
 
-        public ViewResult Create() => View();
+        public  ViewResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create(/*User user*/ CountriesVM countriesVM)
         {
+            var viewModel = new CountriesVM();
+            viewModel.Countries = (System.Collections.Generic.IEnumerable<Country>)_context.Countries
+                .Include(a => a.Cities)
+                .Where(a => a.CountryID == 1)
+                .SingleOrDefault();
+
             if (ModelState.IsValid)
             {
                 AppUser appUser = new AppUser
                 {
-                    UserName = user.Name,
-                    Email = user.Email,
-                    CityId = user.CityId,
-                    CountryId = user.CountryID
+                    UserName = countriesVM.User.Name,
+                    Email = countriesVM.User.Email,
+                    CityId = countriesVM.User.CityId,
+                    CountryId = countriesVM.User.CountryID
                 };
 
-                IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                IdentityResult result = await userManager.CreateAsync(appUser, countriesVM.User.Password);
                 if (result.Succeeded)
                 {
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = user.Email }, Request.Scheme);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = countriesVM.User.Email }, Request.Scheme);
                     EmailHelper emailHelper = new EmailHelper();
-                    bool emailResponse = emailHelper.SendEmail(user.Email, confirmationLink);
+                    bool emailResponse = emailHelper.SendEmail(countriesVM.User.Email, confirmationLink);
 
                     if (emailResponse)
                         return RedirectToAction("Index");
@@ -77,7 +82,7 @@ namespace Identity.Controllers
                         ModelState.AddModelError("", error.Description);
                 }
             }
-            return View(user);
+            return View(countriesVM);
         }
 
         /*[HttpPost]

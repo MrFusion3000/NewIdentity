@@ -4,7 +4,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    if (User.IsInRole("Admin"))
+    if (User.IsInRole("SuperAdmin"))
     {
         <p>
             <a asp-action="Create" class="btn btn-secondary">Create a User</a>
@@ -23,7 +23,7 @@
                 <th>Update</th>
                 <th>Delete</th>
             </tr>
-            @foreach (AppUser user in Model)
+            @foreach (var user in Model)
             {
                 <tr>
                     <td>@user.Id</td>
@@ -57,8 +57,10 @@
                     <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
+                    <td>@user.CountryId</td>
                 </tr>
-            }
+            }            
         }
+
     }
 </table>

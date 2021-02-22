@@ -22,7 +22,9 @@ namespace Identity.Models
 
         public int CityId { get; set; }
 
-        public Country Country { get; set; }
+        //public Country Country { get; set; }
+        public ICollection<Country> Countries { get; set; }
+
 
         public City City { get; set; }
 

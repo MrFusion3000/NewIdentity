@@ -10,7 +10,7 @@ namespace Identity.Models
 
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<CountryCity> CountryCities { get; set; }
+        //public DbSet<CountryCity> CountryCities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace Identity.Models
 
             modelBuilder.Entity<Country>().ToTable("Country");
             modelBuilder.Entity<City>().ToTable("City");
-            modelBuilder.Entity<CountryCity>().ToTable("CountryCity");
+            //modelBuilder.Entity<CountryCity>().ToTable("CountryCity");
 
             string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
             string ROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
@@ -38,6 +38,8 @@ namespace Identity.Models
                 Id = ADMIN_ID,
                 Email = "nico@crepro.com",
                 EmailConfirmed = true,
+                NormalizedEmail = "nico@crepro.com",
+                NormalizedUserName = "nico",
                 CityId = 1,
                 CountryId = 1,
                 UserName = "nico" 

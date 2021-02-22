@@ -8,9 +8,11 @@ namespace Identity.Views.ViewModels
 {
     public class CountriesVM
     {
+        public User User { get; set; }
         public int CountryID { get; set; }
         public string CountryName { get; set; }
 
-        public List<City> Cities { get; set; }
+        public IEnumerable<Country> Countries { get; set; }
+        public IEnumerable<City> Cities { get; set; }
     }
 }

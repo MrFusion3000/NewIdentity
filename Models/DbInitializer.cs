@@ -15,10 +15,10 @@ namespace Identity.Models
 
 
             // Look for any Countries
-            //if (context.Countries.Any())
-            //{
-            //    return;   // DB has been seeded
-            //}
+            if (context.Countries.Any())
+            {
+                return;   // DB has been seeded
+            }
 
             // Add sample countries
             var countries = new Country[]
@@ -36,10 +36,10 @@ namespace Identity.Models
             //Add sample Cities
            var cities = new City[]
            {
-                new City{CityName="Stockholm"},
-                new City{CityName="Göteborg"},
-                new City{CityName="Oslo"},
-                new City{CityName="Halden"}
+                new City{CityName="Stockholm", CountryID = 1},
+                new City{CityName="Göteborg", CountryID = 1},
+                new City{CityName="Oslo", CountryID = 2},
+                new City{CityName="Halden", CountryID = 2}
            };
             foreach (City c in cities)
             {
@@ -48,18 +48,18 @@ namespace Identity.Models
             context.SaveChanges();
 
             // Add sample connections Country -- City 
-            var countryCity = new CountryCity[]
-            {
-            new CountryCity{CountryId=1,CityId=1},
-            new CountryCity{CountryId=1,CityId=2},
-            new CountryCity{CountryId=2,CityId=3},
+            //var countryCity = new CountryCity[]
+            //{
+            //new CountryCity{CountryId=1,CityId=1},
+            //new CountryCity{CountryId=1,CityId=2},
+            //new CountryCity{CountryId=2,CityId=3},
 
-            };
-            foreach (CountryCity e in countryCity)
-            {
-                context.CountryCities.Add(e);
-            }
-            context.SaveChanges();
+            //};
+            //foreach (CountryCity e in countryCity)
+            //{
+            //    context.CountryCities.Add(e);
+            //}
+            //context.SaveChanges();
         }
     }
 }

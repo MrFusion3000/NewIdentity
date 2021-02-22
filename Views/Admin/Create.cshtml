@@ -1,4 +1,5 @@
-﻿@model User
+﻿@model Identity.Views.ViewModels.CountriesVM
+@*@model IEnumerable<Identity.Views.ViewModels.CountriesVM>*@
 
 <h1 class="bg-info text-white">Create User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
@@ -6,30 +7,33 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="Name">Username</label>
-        <input asp-for="Name" class="form-control" />
+        <label asp-for="User.Name">Username</label>
+        <input asp-for="User.Name" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+        <label asp-for="User.Email"></label>
+        <input asp-for="User.Email" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
+        <label asp-for="User.Password"></label>
+        <input asp-for="User.Password" class="form-control" />
     </div>
+    
+    @foreach( var country in Model.Countries)
+    {
+        <p>@country.CountryName</p>
+    }
+
     @*<div class="form-group">
-        <label asp-for="Age"></label>
-        <input asp-for="Age" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Country"></label>
-        <select asp-for="Country" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
+        <label asp-for="Countries"></label>
+        <select asp-for="Countries" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
             <option selected disabled value="Select">Select Country</option>
         </select>
-    </div>
+    </div>*@
+    @*@foreach(var city in Model.Cities)
     <div class="form-group">
-        <label asp-for="Salary"></label>
-        <input asp-for="Salary" class="form-control" />
+        <label asp-for=""></label>
+        <input asp-for="CityId" class="form-control" />
     </div>*@
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
