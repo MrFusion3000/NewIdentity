@@ -36,15 +36,17 @@ namespace Identity.Models
             var appUser = new AppUser
             {
                 Id = ADMIN_ID,
-                Email = "nico@gmail.com",
+                Email = "nico@crepro.com",
                 EmailConfirmed = true,
                 CityId = 1,
+                CountryId = 1,
                 UserName = "nico" 
            };
 
             //set user password
             PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();
-            appUser.PasswordHash = ph.HashPassword(appUser, "mypassword_ ?");
+            appUser.PasswordHash = ph.HashPassword(appUser, "Admin1234!");
+
 
             //seed user
             modelBuilder.Entity<AppUser>().HasData(appUser);

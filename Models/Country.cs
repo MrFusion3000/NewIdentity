@@ -7,10 +7,10 @@ namespace Identity.Models
 {
     public class Country
     {
-        public int ID { get; set; }
+        public int CountryID { get; set; }
         public string CountryName { get; set; }
 
-        public virtual ICollection<CountryCity> CountryCities { get; set; }
+        public ICollection<CountryCity> CountryCities { get; set; }
 
 
         //        public virtual City Cities { get; set; }

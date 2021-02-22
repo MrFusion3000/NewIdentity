@@ -35,9 +35,10 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Cities.ToList());
-
-            //return View(userManager.Users);
+            var cityList = _context.Cities.FirstOrDefaultAsync(c => c.CityID == 1);
+            ViewData["CountryList"] = cityList; 
+            
+            return View(userManager.Users);
         }
 
         public ViewResult Create() => View();
@@ -52,7 +53,7 @@ namespace Identity.Controllers
                     UserName = user.Name,
                     Email = user.Email,
                     CityId = user.CityId,
-                    CountryID = user.CountryID
+                    CountryId = user.CountryID
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
@@ -108,7 +109,7 @@ namespace Identity.Controllers
         public async Task<IActionResult> Update(string id)
         {
             ViewData["CountryList"] = await _context.Countries
-                .FirstOrDefaultAsync( c => c.ID == 1);
+                .FirstOrDefaultAsync(c => c.CountryID == 1);
                     
 
             AppUser user = await userManager.FindByIdAsync(id);
