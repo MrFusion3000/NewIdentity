@@ -2,9 +2,8 @@
 using Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using System;
 using Identity.Email;
-using Identity.Views.ViewModels;
+using Identity.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -35,7 +34,7 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            //ViewData["CountryList"] = country; 
+            var countries = Country.ShowCountries; 
             
             return View(userManager.Users);
         }
@@ -45,11 +44,7 @@ namespace Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(/*User user*/ CountriesVM countriesVM)
         {
-            var viewModel = new CountriesVM();
-            viewModel.Countries = (System.Collections.Generic.IEnumerable<Country>)_context.Countries
-                .Include(a => a.Cities)
-                .Where(a => a.CountryID == 1)
-                .SingleOrDefault();
+            var countries = Country.ShowCountries;
 
             if (ModelState.IsValid)
             {
@@ -58,7 +53,7 @@ namespace Identity.Controllers
                     UserName = countriesVM.User.Name,
                     Email = countriesVM.User.Email,
                     CityId = countriesVM.User.CityId,
-                    CountryId = countriesVM.User.CountryID
+                    CountryId = countriesVM.User.CountryId
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, countriesVM.User.Password);

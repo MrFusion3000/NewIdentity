@@ -1,4 +1,4 @@
-﻿@model Identity.Views.ViewModels.CountriesVM
+﻿@model Identity.Models.ViewModels.CountriesVM
 @*@model IEnumerable<Identity.Views.ViewModels.CountriesVM>*@
 
 <h1 class="bg-info text-white">Create User</h1>
@@ -18,22 +18,30 @@
         <label asp-for="User.Password"></label>
         <input asp-for="User.Password" class="form-control" />
     </div>
-    
-    @foreach( var country in Model.Countries)
-    {
-        <p>@country.CountryName</p>
-    }
+    @*<div class="form-group">
+        <label asp-for="User.CountryId">Country</label>
+        <select asp-for="User.CountryId" class="form-group" asp-items="@(new SelectList(, "CountryID", "CountryName"))" />
+    </div>*@
+    <div class="form-group">
+        <label asp-for="User.CityId">City</label>
+        <input asp-for="User.CityId" class="form-control" />
+    </div>
+
+    @foreach( var country in Country.ShowCountries )
+        {
+            <p>@country.CountryName</p>
+        }
 
     @*<div class="form-group">
-        <label asp-for="Countries"></label>
-        <select asp-for="Countries" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
-            <option selected disabled value="Select">Select Country</option>
-        </select>
-    </div>*@
+            <label asp-for="Countries"></label>
+            <select asp-for="Countries" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
+                <option selected disabled value="Select">Select Country</option>
+            </select>
+        </div>*@
     @*@foreach(var city in Model.Cities)
-    <div class="form-group">
-        <label asp-for=""></label>
-        <input asp-for="CityId" class="form-control" />
-    </div>*@
+        <div class="form-group">
+            <label asp-for=""></label>
+            <input asp-for="CityId" class="form-control" />
+        </div>*@
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
