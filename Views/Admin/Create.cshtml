@@ -1,5 +1,5 @@
-﻿@model Identity.Models.ViewModels.CountriesVM
-@*@model IEnumerable<Identity.Views.ViewModels.CountriesVM>*@
+﻿@*@model Identity.Models.ViewModels.CountriesVM*@
+@model User
 
 <h1 class="bg-info text-white">Create User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
@@ -7,41 +7,48 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="User.Name">Username</label>
-        <input asp-for="User.Name" class="form-control" />
+        <label asp-for="Name">Username</label>
+        <input asp-for="Name" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="User.Email"></label>
-        <input asp-for="User.Email" class="form-control" />
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="User.Password"></label>
-        <input asp-for="User.Password" class="form-control" />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
     </div>
-    @*<div class="form-group">
-        <label asp-for="User.CountryId">Country</label>
-        <select asp-for="User.CountryId" class="form-group" asp-items="@(new SelectList(, "CountryID", "CountryName"))" />
-    </div>*@
     <div class="form-group">
-        <label asp-for="User.CityId">City</label>
-        <input asp-for="User.CityId" class="form-control" />
+        <label asp-for="CountryId">Country</label>
+        <select asp-for="CountryId" class="form-control" id="CountryName">
+            @foreach (var country in Country.ShowCountries)
+            {
+                <option value="@country.CountryID">
+                    @country.CountryName
+                </option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="CityId">Country</label>
+        <select asp-for="CityId" class="form-control" id="CityName">
+            @foreach (var city in City.ShowCities)
+            {
+                <option value="@city.CityID">
+                    @city.CityName
+                </option>
+            }
+        </select>
     </div>
 
-    @foreach( var country in Country.ShowCountries )
-        {
-            <p>@country.CountryName</p>
-        }
+    @*Testing nested droplist*@
+    <label asp-for="CountryId "></label>
+    <select asp-for="CountryId " asp-items="Model.CountryId" class="form-control" id="country-target"></select>
+    <span asp-validation-for="CountryId " class="text-danger"></span>
 
-    @*<div class="form-group">
-            <label asp-for="Countries"></label>
-            <select asp-for="Countries" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
-                <option selected disabled value="Select">Select Country</option>
-            </select>
-        </div>*@
-    @*@foreach(var city in Model.Cities)
-        <div class="form-group">
-            <label asp-for=""></label>
-            <input asp-for="CityId" class="form-control" />
-        </div>*@
+    <label asp-for="CityId"></label>
+    <select asp-for="CityId" asp-items="Model.CityId" class="form-control" id="city-target"></select>
+    <span asp-validation-for="CityId" class="text-danger"></span>
+
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

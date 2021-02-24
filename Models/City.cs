@@ -9,8 +9,10 @@ namespace Identity.Models
     {
         public int CityID { get; set; }
         public string CityName { get; set; }
-        public int CountryID { get; set; }
+        public int CountrysID { get; set; }
 
-        public virtual Country Country { get; set; }
+        public static List<City> ShowCities { get; set; }
+
+        //public virtual Country Country { get; set; }
     }
 }

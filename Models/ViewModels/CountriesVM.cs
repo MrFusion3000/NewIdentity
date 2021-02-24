@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Identity.Models.ViewModels
 {
@@ -7,9 +8,9 @@ namespace Identity.Models.ViewModels
         //public AppUser AppUser { get; set; }
         public User User { get; set; }
 
-        public Country Country { get; set; }
+        //public Country Country { get; set; }
 
-        //public static List<CountriesVM> ListCountries { get; set; } = new List<CountriesVM>();
+        //public List<SelectListItem> SelectListCountries { get; set; }
 
 
         //public int CountryID { get; set; }

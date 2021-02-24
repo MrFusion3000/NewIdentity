@@ -6,6 +6,8 @@ using Identity.Email;
 using Identity.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Identity.Controllers
 {
@@ -34,35 +36,40 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            var countries = Country.ShowCountries; 
-            
             return View(userManager.Users);
         }
 
-        public  ViewResult Create() => View();
+        public ViewResult Create()
+        {
+            Country.ShowCountries = _context.Countries.ToList();
+            City.ShowCities = _context.Cities.ToList();
+
+            return View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create(/*User user*/ CountriesVM countriesVM)
+        public async Task<IActionResult> Create(User user)
         {
-            var countries = Country.ShowCountries;
+            Country.ShowCountries = _context.Countries.ToList();
+            City.ShowCities = _context.Cities.ToList();
 
             if (ModelState.IsValid)
             {
                 AppUser appUser = new AppUser
                 {
-                    UserName = countriesVM.User.Name,
-                    Email = countriesVM.User.Email,
-                    CityId = countriesVM.User.CityId,
-                    CountryId = countriesVM.User.CountryId
+                    UserName = user.Name,
+                    Email = user.Email,
+                    CityId = user.CityId,
+                    CountryId = user.CountryId
                 };
 
-                IdentityResult result = await userManager.CreateAsync(appUser, countriesVM.User.Password);
+                IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
                 if (result.Succeeded)
                 {
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = countriesVM.User.Email }, Request.Scheme);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = user.Email }, Request.Scheme);
                     EmailHelper emailHelper = new EmailHelper();
-                    bool emailResponse = emailHelper.SendEmail(countriesVM.User.Email, confirmationLink);
+                    bool emailResponse = emailHelper.SendEmail(user.Email, confirmationLink);
 
                     if (emailResponse)
                         return RedirectToAction("Index");
@@ -77,7 +84,7 @@ namespace Identity.Controllers
                         ModelState.AddModelError("", error.Description);
                 }
             }
-            return View(countriesVM);
+            return View(user);
         }
 
         /*[HttpPost]
@@ -108,9 +115,8 @@ namespace Identity.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
-            ViewData["CountryList"] = await _context.Countries
-                .FirstOrDefaultAsync(c => c.CountryID == 1);
-                    
+            //ViewData["CountryList"] = await _context.Countries
+            //    .FirstOrDefaultAsync(c => c.CountryID == 1);                    
 
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)

@@ -36,10 +36,11 @@ namespace Identity.Models
             //Add sample Cities
            var cities = new City[]
            {
-                new City{CityName="Stockholm", CountryID = 1},
-                new City{CityName="Göteborg", CountryID = 1},
-                new City{CityName="Oslo", CountryID = 2},
-                new City{CityName="Halden", CountryID = 2}
+                new City{CityName="Stockholm", CountrysID = 1},
+                new City{CityName="Göteborg", CountrysID = 1},
+                new City{CityName="Oslo", CountrysID = 2},
+                new City{CityName="Halden", CountrysID = 2}
+
            };
             foreach (City c in cities)
             {
