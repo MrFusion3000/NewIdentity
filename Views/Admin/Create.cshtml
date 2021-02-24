@@ -42,13 +42,7 @@
     </div>
 
     @*Testing nested droplist*@
-    <label asp-for="CountryId "></label>
-    <select asp-for="CountryId " asp-items="Model.CountryId" class="form-control" id="country-target"></select>
-    <span asp-validation-for="CountryId " class="text-danger"></span>
 
-    <label asp-for="CityId"></label>
-    <select asp-for="CityId" asp-items="Model.CityId" class="form-control" id="city-target"></select>
-    <span asp-validation-for="CityId" class="text-danger"></span>
 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

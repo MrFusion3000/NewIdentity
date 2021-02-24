@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<AppUser>
+@using Identity.Models.ViewModels
 
 <h1 class="bg-info text-white">All Users</h1>
 
@@ -31,8 +32,16 @@
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
-                <td>@user.CountryId</td>
-                <td>@user.CityId</td>
+                <td>
+                @if (user.CountryId == 1)
+                {
+                @*@Country.CountryName*@
+                }
+                </td>
+                <td>
+                
+                @user.CityId
+                </td>
                 <td>
                     <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">
                         Update

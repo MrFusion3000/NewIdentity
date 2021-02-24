@@ -36,6 +36,11 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
+            //var result = from user in _context.Users
+            //             join country in _context.Countries on user.CountryId equals country.CountryID
+            //             join city in _context.Cities on user.CityId equals city.CityID
+            //             select new { UserCountry = country.CountryName, UserCity = city.CityName };
+
             return View(userManager.Users);
         }
 

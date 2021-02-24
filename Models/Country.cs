@@ -22,7 +22,7 @@ namespace Identity.Models
         //    return CityList;
         //}
 
-        //        public virtual City Cities { get; set; }
+        public virtual City Cities { get; set; }
 
     }
 }
