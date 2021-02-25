@@ -52,26 +52,15 @@ namespace Identity.Migrations
                 name: "City",
                 columns: table => new
                 {
-                    CityID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityName = table.Column<string>(nullable: true)
+                    CityId = table.Column<int>(nullable: false),
+                    CityName = table.Column<string>(nullable: true),
+                    CountryCityID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.CityID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Country",
-                columns: table => new
-                {
-                    CountryID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CountryName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Country", x => x.CountryID);
+                    table.PrimaryKey("PK_City", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,29 +170,24 @@ namespace Identity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CountryCity",
+                name: "Country",
                 columns: table => new
                 {
-                    CountryCityID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityId = table.Column<int>(nullable: false),
-                    CountryId = table.Column<int>(nullable: false)
+                    CountryName = table.Column<string>(nullable: true),
+                    CountryId = table.Column<int>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CountryCity", x => x.CountryCityID);
+                    table.PrimaryKey("PK_Country", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CountryCity_City_CityId",
-                        column: x => x.CityId,
-                        principalTable: "City",
-                        principalColumn: "CityID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CountryCity_Country_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Country",
-                        principalColumn: "CountryID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Country_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -214,7 +198,7 @@ namespace Identity.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "CityId", "ConcurrencyStamp", "CountryId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, 1, "47667460-0244-4745-8841-be18ce3a55a1", 1, "nico@crepro.com", true, false, null, null, null, "AQAAAAEAACcQAAAAECmjLxvwsIAmBIhyk7GHe6i8HXN/z6KVZlp7UdgEpieIXkrKoaBgJ3PK8BLRlbnYkg==", null, false, "f8a940d6-6b3f-42b3-9cdc-7d9e5cb91974", false, "nico" });
+                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, 1, "2c4fe6d4-1968-4cc6-914e-21b8334762e3", 1, "nico@crepro.com", true, false, null, "nico@crepro.com", "nico", "AQAAAAEAACcQAAAAEF6JpAzFzM3keq+Zmw7GNkvRH+LBHM4KlYrC7caGq8pGCIh1TED7Z4FP3OeAQZP5hw==", null, false, "5a633ee3-e533-4efd-80e1-1aad83cbdbed", false, "nico" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -261,14 +245,15 @@ namespace Identity.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CountryCity_CityId",
-                table: "CountryCity",
-                column: "CityId");
+                name: "IX_Country_AppUserId",
+                table: "Country",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CountryCity_CountryId",
-                table: "CountryCity",
-                column: "CountryId");
+                name: "IX_Country_CountryId",
+                table: "Country",
+                column: "CountryId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -289,19 +274,16 @@ namespace Identity.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CountryCity");
+                name: "City");
+
+            migrationBuilder.DropTable(
+                name: "Country");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "City");
-
-            migrationBuilder.DropTable(
-                name: "Country");
         }
     }
 }

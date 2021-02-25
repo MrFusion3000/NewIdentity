@@ -24,5 +24,6 @@ namespace Identity.Models
 
         [Required]
         public int CityId { get; set; }
+
     }
 }

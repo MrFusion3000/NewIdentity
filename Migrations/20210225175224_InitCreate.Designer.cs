@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20210222110529_InitCreate")]
+    [Migration("20210225175224_InitCreate")]
     partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,14 +97,16 @@ namespace Identity.Migrations
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
                             CityId = 1,
-                            ConcurrencyStamp = "47667460-0244-4745-8841-be18ce3a55a1",
+                            ConcurrencyStamp = "2c4fe6d4-1968-4cc6-914e-21b8334762e3",
                             CountryId = 1,
                             Email = "nico@crepro.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAECmjLxvwsIAmBIhyk7GHe6i8HXN/z6KVZlp7UdgEpieIXkrKoaBgJ3PK8BLRlbnYkg==",
+                            NormalizedEmail = "nico@crepro.com",
+                            NormalizedUserName = "nico",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF6JpAzFzM3keq+Zmw7GNkvRH+LBHM4KlYrC7caGq8pGCIh1TED7Z4FP3OeAQZP5hw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f8a940d6-6b3f-42b3-9cdc-7d9e5cb91974",
+                            SecurityStamp = "5a633ee3-e533-4efd-80e1-1aad83cbdbed",
                             TwoFactorEnabled = false,
                             UserName = "nico"
                         });
@@ -112,37 +114,7 @@ namespace Identity.Migrations
 
             modelBuilder.Entity("Identity.Models.City", b =>
                 {
-                    b.Property<int>("CityID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CityID");
-
-                    b.ToTable("City");
-                });
-
-            modelBuilder.Entity("Identity.Models.Country", b =>
-                {
-                    b.Property<int>("CountryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CountryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CountryID");
-
-                    b.ToTable("Country");
-                });
-
-            modelBuilder.Entity("Identity.Models.CountryCity", b =>
-                {
-                    b.Property<int>("CountryCityID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -150,16 +122,41 @@ namespace Identity.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CountryCityID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("Identity.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.HasKey("CountryCityID");
+                    b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CityId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("AppUserId");
 
-                    b.ToTable("CountryCity");
+                    b.HasIndex("CountryId")
+                        .IsUnique();
+
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -309,19 +306,11 @@ namespace Identity.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Identity.Models.CountryCity", b =>
+            modelBuilder.Entity("Identity.Models.Country", b =>
                 {
-                    b.HasOne("Identity.Models.City", "City")
-                        .WithMany("CountryCities")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Identity.Models.Country", "Country")
-                        .WithMany("CountryCities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Identity.Models.AppUser", null)
+                        .WithMany("Countries")
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

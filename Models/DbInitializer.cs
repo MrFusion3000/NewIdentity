@@ -23,8 +23,8 @@ namespace Identity.Models
             // Add sample countries
             var countries = new Country[]
             {
-            new Country{CountryName="Sweden"},
-            new Country{CountryName="Norway"},
+            new Country{CountryName="Sweden", CountryId=1},
+            new Country{CountryName="Norway", CountryId=2}
 
             };
             foreach (Country s in countries)
@@ -34,14 +34,14 @@ namespace Identity.Models
             context.SaveChanges();
 
             //Add sample Cities
-           var cities = new City[]
-           {
-                new City{CityName="Stockholm", CountrysID = 1},
-                new City{CityName="Göteborg", CountrysID = 1},
-                new City{CityName="Oslo", CountrysID = 2},
-                new City{CityName="Halden", CountrysID = 2}
+            var cities = new City[]
+            {
+                new City{CityId=1, CityName="Stockholm", CountryCityID = 1},
+                new City{CityId=2, CityName="Göteborg", CountryCityID = 1},
+                new City{CityId=3, CityName="Oslo", CountryCityID = 2},
+                new City{CityId=4, CityName="Halden", CountryCityID = 2}
 
-           };
+            };
             foreach (City c in cities)
             {
                 context.Cities.Add(c);

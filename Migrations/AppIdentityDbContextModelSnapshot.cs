@@ -30,12 +30,18 @@ namespace Identity.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -79,6 +85,10 @@ namespace Identity.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -95,16 +105,16 @@ namespace Identity.Migrations
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
                             CityId = 1,
-                            ConcurrencyStamp = "ae79b532-bded-44fb-8b3d-8eb63a08c0b6",
+                            ConcurrencyStamp = "db6749bc-e6a9-44d6-bdcb-2e2603e40540",
                             CountryId = 1,
                             Email = "nico@crepro.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "nico@crepro.com",
                             NormalizedUserName = "nico",
-                            PasswordHash = "AQAAAAEAACcQAAAAENolB2NnznxFJkNmVdzrbpyEUweZ8zyPZCzO132wQKDpOw29WTwfwteMziingmcjuw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAaOI++AbaLtqVNnrnpxOH/dDRtHKUzhtLaoTfYm8GOjru0zp1ntz/h7b0E1qN1/UQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0c0b0749-51e5-44fc-8a1f-f1e12db0a74f",
+                            SecurityStamp = "08dacda5-f3bd-4a59-bab4-063383e72d39",
                             TwoFactorEnabled = false,
                             UserName = "nico"
                         });
@@ -112,30 +122,45 @@ namespace Identity.Migrations
 
             modelBuilder.Entity("Identity.Models.City", b =>
                 {
-                    b.Property<int>("CityID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CityID");
+                    b.Property<int>("CountryCityID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId")
+                        .IsUnique();
 
                     b.ToTable("City");
                 });
 
             modelBuilder.Entity("Identity.Models.Country", b =>
                 {
-                    b.Property<int>("CountryID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CountryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CountryID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId")
+                        .IsUnique();
 
                     b.ToTable("Country");
                 });
@@ -285,6 +310,21 @@ namespace Identity.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Identity.Models.AppUser", b =>
+                {
+                    b.HasOne("Identity.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Identity.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

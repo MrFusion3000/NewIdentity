@@ -21,12 +21,12 @@
     <div class="form-group">
         <label asp-for="CountryId">Country</label>
         <select asp-for="CountryId" class="form-control" id="CountryName">
-            @foreach (var country in Country.ShowCountries)
+            @*@foreach (var country in Model.Country)
             {
-                <option value="@country.CountryID">
+                <option value="@country.Id">
                     @country.CountryName
                 </option>
-            }
+            }*@
         </select>
     </div>
     <div class="form-group">
@@ -34,7 +34,7 @@
         <select asp-for="CityId" class="form-control" id="CityName">
             @foreach (var city in City.ShowCities)
             {
-                <option value="@city.CityID">
+                <option value="@city.Id">
                     @city.CityName
                 </option>
             }

@@ -10,6 +10,7 @@ namespace Identity.Models
 
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,6 +19,12 @@ namespace Identity.Models
             modelBuilder.Entity<Country>().ToTable("Country");
             modelBuilder.Entity<City>().ToTable("City");
             //modelBuilder.Entity<CountryCity>().ToTable("CountryCity");
+            modelBuilder.Entity<Country>()
+                .HasIndex(u => u.CountryId)
+                .IsUnique();
+            modelBuilder.Entity<City>()
+                .HasIndex(u => u.CityId)
+                .IsUnique();
 
             string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
             string ROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
@@ -41,8 +48,8 @@ namespace Identity.Models
                 NormalizedUserName = "nico",
                 CityId = 1,
                 CountryId = 1,
-                UserName = "nico" 
-           };
+                UserName = "nico"
+            };
 
             //set user password
             PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();

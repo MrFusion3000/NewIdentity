@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Identity.Email;
 using Identity.Models.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Controllers
 {
@@ -36,28 +35,20 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            //var result = from user in _context.Users
-            //             join country in _context.Countries on user.CountryId equals country.CountryID
-            //             join city in _context.Cities on user.CityId equals city.CityID
-            //             select new { UserCountry = country.CountryName, UserCity = city.CityName };
-
             return View(userManager.Users);
         }
 
         public ViewResult Create()
         {
-            Country.ShowCountries = _context.Countries.ToList();
-            City.ShowCities = _context.Cities.ToList();
-
-            return View();
+            var Country = _context.Countries.ToList();
+            //City.ShowCities = _context.Cities.ToList();
+            
+            return View(Country);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(User user)
         {
-            Country.ShowCountries = _context.Countries.ToList();
-            City.ShowCities = _context.Cities.ToList();
-
             if (ModelState.IsValid)
             {
                 AppUser appUser = new AppUser

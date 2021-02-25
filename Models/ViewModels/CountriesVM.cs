@@ -6,30 +6,19 @@ namespace Identity.Models.ViewModels
     public class CountriesVM
     {
         //public AppUser AppUser { get; set; }
-        public static User User { get; set; }
+        public AppUser User { get; set; }
         public Country Country { get; set; }
-        public static City City { get; set; }
+        public City City { get; set; }
 
 
-        // eventuell metod för att hämta CountryName filterat på CountryID 
-    //    public string GetCountryName()
-    //    {
-    //        var result = from user in User.
-    //                     join country in _context.Countries on user.CountryId equals country.CountryID
-    //                     join city in _context.Cities on user.CityId equals city.CityID
-    //                     select new { UserCountry = country.CountryName, UserCity = city.CityName
 
-    //        return result;
-    //};
-//}
+        //public static List<CountriesVM> UsersList { get; set; } = new List<CountriesVM>();
+        //public static List<Country> CountriesList { get; set; }
+        //public static List<City> CitiesList { get; set; }
 
-        //public List<SelectListItem> SelectListCountries { get; set; }
+        //public List<CountriesVM> TempUsersList { get; set; } = new List<CountriesVM>();
 
 
-        //public int CountryID { get; set; }
-        //public string CountryName { get; set; }
-
-        //public IEnumerable<Country> Countries { get; set; }
-        //public IEnumerable<City> Cities { get; set; }
+        
     }
 }
