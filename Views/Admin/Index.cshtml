@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<AppUser>
-@*@model CountriesVM*@
 
 @using Identity.Models.ViewModels
 
@@ -19,6 +18,9 @@
     {
         if (User.IsInRole("SuperAdmin"))
         {
+            @{
+                CountryCity countryCity = ViewBag.CountryCity; 
+                }
             <tr>
                 <th>ID</th>
                 <th>Username</th>
@@ -35,8 +37,8 @@
                     <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
-                    <td>@user.CountryName</td>
-                    <td>@user.CityName</td>
+                    <td>@user.Country.CountryName</td>
+                    <td>@</td>
                     <td>
                         <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">
                             Update

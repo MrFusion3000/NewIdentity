@@ -1,4 +1,6 @@
-﻿namespace Identity.Models
+﻿using System.Collections.Generic;
+
+namespace Identity.Models
 {
     public class Country
     {
@@ -7,7 +9,7 @@
         public int CountryId { get; set; }
 
 
-        //public static List<Country> ShowCountries { get; set; }
+        public static List<Country> ShowCountries { get; set; }
 
     }
 }

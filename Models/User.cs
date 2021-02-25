@@ -25,5 +25,8 @@ namespace Identity.Models
         [Required]
         public int CityId { get; set; }
 
+        public virtual Country Country { get; set; }
+        public virtual City City { get; set; }
+
     }
 }
