@@ -1,6 +1,5 @@
 ﻿@model AppUser
 
-
 <h1 class="bg-info text-white">Update User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
@@ -18,29 +17,37 @@
         <label for="password">Password</label>
         <input name="password" class="form-control" />
     </div>
-    @*<div class="form-group">
-        <label asp-for="CountryId"></label>
-        <select asp-for="CountryId" class="form-control" asp-items="@new SelectList(#)">
-            <option selected disabled value="Select">Select Country</option>
+    <div class="form-group">
+        <label asp-for="CountryId">Country</label>
+        <select asp-for="CountryId" class="form-control" id="CountryName">
+            @foreach (var country in Country.ShowCountries)
+            {
+                <option value="@country.Id">
+                    @country.CountryName
+                </option>
+            }
         </select>
-    </div>*@
+    </div>
+    <div class="form-group">
+        <label asp-for="CityId">City</label>
+        <select asp-for="CityId" class="form-control" id="CityName">
+            @foreach (var city in City.ShowCities)
+            {
+                <option value="@city.Id">
+                    @city.CityName
+                </option>
 
-    <h1>@ViewData["cityList"]</h1>
+            }
+        </select>
+    </div>
+
 
     @*<div class="form-group">
             <label asp-for="Country"></label>
             <select asp-for="Country" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
                 <option selected disabled value="Select">Select Country</option>
             </select>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-                <label asp-for="Age"></label>
-                <input asp-for="Age" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Salary"></label>
-                <input asp-for="Salary" class="form-control" />
-            </div>*@
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

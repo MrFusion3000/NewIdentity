@@ -35,28 +35,16 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            var userId = 1;
-            var query = (from co in _context.Countries
-                         join cy in _context.Cities on co.CountryId equals cy.CityId
-                         join u in _context.AppUsers on co.CountryId equals u.CountryId
-                         where co.Id == userId
-                         select new
-                         {
-                             CountryName = co.CountryName,
-                             CityName = cy.CityName
-                         }).ToList();
-            AppUser CountryCity = new AppUser();
+            Country.ShowCountries = _context.Countries.ToList();
+            City.ShowCities = _context.Cities.ToList();
 
-            return View(CountryCity);
-
-            //return View(userManager.Users);
+            return View(userManager.Users);
         }
 
         public ViewResult Create()
         {
-
-            Country.ShowCountries = _context.Countries.ToList();
-            City.ShowCities = _context.Cities.ToList();
+            //Country.ShowCountries = _context.Countries.ToList();
+            //City.ShowCities = _context.Cities.ToList();
             
             return View();
         }
@@ -71,9 +59,7 @@ namespace Identity.Controllers
                     UserName = user.Name,
                     Email = user.Email,
                     CityId = user.CityId,
-                    CountryId = user.CountryId,
-                    CountryName = user.Country.CountryName,
-                    CityName = user.City.CityName
+                    CountryId = user.CountryId                    
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
