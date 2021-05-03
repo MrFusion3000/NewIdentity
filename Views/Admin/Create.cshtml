@@ -1,4 +1,21 @@
-﻿@model User
+﻿@model CountriesVM
+
+<script src="/lib/jquery//dist/jquery.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#CityId').change(function () {
+            var url = '@Url.Content("~/")' + "Admin/GetCities";
+            var ddlsource = "#CountryId";
+            $.getJSON(url, { CountryId: $(ddlsource).val() }), function (data) {
+                var items = '';
+                $.each(data, function (i, cities) {
+                    items += "<option value='" + cities.value + "'>" + cities.text + "</option>";
+                });
+                $('#CityId').html(items);
+            });
+    });
+</script>
 
 <h1 class="bg-info text-white">Create User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
@@ -18,7 +35,7 @@
         <input asp-for="Password" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="CountryId">Country</label>
+        <label asp-for="CountryName" class="control-label"></label>
         <select asp-for="CountryId" class="form-control" id="CountryName">
             @foreach (var country in Country.ShowCountries)
             {
@@ -28,20 +45,27 @@
             }
         </select>
     </div>
-    
-    <div class="form-group">
-        <label asp-for="CityId">City</label>
-        <select asp-for="CityId" class="form-control" id="CityName">
-            @foreach (var city in City.ShowCities)
-            {
-                <option value="@city.Id">
-                    @city.CityName
-                    </option>                    
-            }
-        </select>
-    </div>    
+
+    @*<div class="form-group">
+            <label asp-for="CityId">City</label>
+            <select asp-for="CityId" class="form-control" id="CityName">
+                @foreach (var city in City.ShowCities)
+                {
+                    <option value="@city.Id">
+                        @city.CityName
+                    </option>
+
+                }
+            </select>
+        </div>*@
 
     @*Test nested droplist*@
+
+    <div class="form-group">
+        <label asp-for="CityId">City</label>
+        <select asp-for="CityId" class="form-control" id="CityName" asp-item="@(new SelectList(string.Empty, "CityId", "CityName"))">
+        </select>
+    </div>
 
 
     <button type="submit" class="btn btn-primary">Create</button>

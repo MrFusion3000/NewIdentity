@@ -7,6 +7,7 @@ using Identity.Models.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Identity.Controllers
 {
@@ -40,6 +41,19 @@ namespace Identity.Controllers
 
             return View(userManager.Users);
         }
+
+        public JsonResult GetCities(int CityId)
+        {
+            List<City> citiesList = new List<City>();
+            citiesList = (from cities in _context.Cities
+                          where cities.CountryCityID == CityId
+                          select cities).ToList();
+
+            citiesList.Insert(0, new City { CityId = 0, CityName = "Select" });
+
+            return Json(new SelectList(citiesList, "CityId", "CityName"));
+        }
+
 
         public ViewResult Create()
         {
@@ -114,9 +128,6 @@ namespace Identity.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
-            //ViewData["CountryList"] = await _context.Countries
-            //    .FirstOrDefaultAsync(c => c.CountryID == 1);                    
-
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
                 return View(user);

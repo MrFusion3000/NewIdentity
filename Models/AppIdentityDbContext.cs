@@ -18,7 +18,6 @@ namespace Identity.Models
 
             modelBuilder.Entity<Country>().ToTable("Country");
             modelBuilder.Entity<City>().ToTable("City");
-            //modelBuilder.Entity<CountryCity>().ToTable("CountryCity");
             modelBuilder.Entity<Country>()
                 .HasIndex(u => u.CountryId)
                 .IsUnique();
@@ -54,7 +53,6 @@ namespace Identity.Models
             //set user password
             PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();
             appUser.PasswordHash = ph.HashPassword(appUser, "Admin1234!");
-
 
             //seed user
             modelBuilder.Entity<AppUser>().HasData(appUser);

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
-namespace Identity.Models.ViewModels
+namespace Identity.Models
 {
     public class CountriesVM
     {
         //public AppUser AppUser { get; set; }
-        public AppUser User { get; set; }
+        public User User { get; set; }
         public Country Country { get; set; }
         public City City { get; set; }
 
