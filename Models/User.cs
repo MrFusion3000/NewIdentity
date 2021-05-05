@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Identity.Models
 {
@@ -15,10 +16,7 @@ namespace Identity.Models
         public string Password { get; set; }
 
         [Required]
-        public int CountryId { get; set; }
-
-        [Required]
-        public int CityId { get; set; }
+        public Guid CityId { get; set; }
 
         public virtual Country Country { get; set; }
         public virtual City City { get; set; }

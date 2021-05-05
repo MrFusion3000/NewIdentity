@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Identity.Models
 {
@@ -16,17 +17,19 @@ namespace Identity.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Country>().ToTable("Country");
-            modelBuilder.Entity<City>().ToTable("City");
+            modelBuilder.Entity<Country>().ToTable("Countries");
+            modelBuilder.Entity<City>().ToTable("Cities");
             modelBuilder.Entity<Country>()
-                .HasIndex(u => u.CountryId)
+                .HasIndex(u => u.Id)
                 .IsUnique();
             modelBuilder.Entity<City>()
-                .HasIndex(u => u.CityId)
+                .HasIndex(u => u.Id)
                 .IsUnique();
 
-            string ADMIN_ID = "02174cf0–9412–4cfe - afbf - 59f706d72cf6";
-            string ROLE_ID = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6";
+            string ADMIN_ID = "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6";
+            string ROLE_ID =  "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf";
+            //string CITY_ID =  "341a43f0asa242deaabf59kmdkmd74c3";
+            var InitUserCityId = Guid.Parse("258d7621e0db4958a098c400c8c9e0a4");
 
             //seed admin role
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
@@ -45,8 +48,7 @@ namespace Identity.Models
                 EmailConfirmed = true,
                 NormalizedEmail = "nico@crepro.com",
                 NormalizedUserName = "nico",
-                CityId = 1,
-                CountryId = 1,
+                CityId = InitUserCityId,
                 UserName = "nico"
             };
 
@@ -63,6 +65,33 @@ namespace Identity.Models
                 RoleId = ROLE_ID,
                 UserId = ADMIN_ID
             });
+
+            //set countries
+            var CountryGuid1 = Guid.NewGuid();
+            var CountryGuid2 = Guid.NewGuid();
+            //var bytes = new Byte[16];
+            //var CityInitGuid = new Guid(bytes);
+            var CityInitGuid = new Guid();
+            var CityGuid1 = Guid.NewGuid();
+            var CityGuid2 = Guid.NewGuid();
+            var CityGuid3 = Guid.NewGuid();
+            var CityGuid4 = Guid.NewGuid();
+            var CityGuid5 = Guid.NewGuid();
+
+            modelBuilder.Entity<Country>().HasData(
+                new Country { Id = CountryGuid1, CountryName = "Sweden" },
+                new Country { Id = CountryGuid2, CountryName = "Norway" }
+                );
+
+            //set cities
+            modelBuilder.Entity<City>().HasData(
+                new City {Id = CityGuid1, CityName = "Select", CountryID = CityInitGuid },
+                new City {Id = CityGuid2, CityName = "Stockholm", CountryID = CountryGuid1 },
+                new City {Id = CityGuid3, CityName = "Göteborg", CountryID = CountryGuid1 },
+                new City {Id = CityGuid4, CityName = "Oslo", CountryID = CountryGuid2 },
+                new City {Id = CityGuid5, CityName = "Halden", CountryID = CountryGuid2 }
+                );
+
         }
     }
 

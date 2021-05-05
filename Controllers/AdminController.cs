@@ -3,21 +3,21 @@ using Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Identity.Email;
-using Identity.Models.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace Identity.Controllers
 {
     public class AdminController : Controller
     {
-        private UserManager<AppUser> userManager;
-        private IPasswordHasher<AppUser> passwordHasher;
-        private IPasswordValidator<AppUser> passwordValidator;
-        private IUserValidator<AppUser> userValidator;
-        private AppIdentityDbContext _context;
+        private readonly UserManager<AppUser> userManager;
+        private readonly IPasswordHasher<AppUser> passwordHasher;
+        private readonly IPasswordValidator<AppUser> passwordValidator;
+        private readonly IUserValidator<AppUser> userValidator;
+        private readonly AppIdentityDbContext _context;
 
         /*public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
         {
@@ -36,23 +36,26 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            Country.ShowCountries = _context.Countries.ToList();
-            City.ShowCities = _context.Cities.ToList();
+            AppUserDetailsViewModel.UsersList = userManager.Users.ToList();
+            AppUserDetailsViewModel.CountriesList = _context.Countries.ToList();
+            AppUserDetailsViewModel.CitiesList = _context.Cities.ToList();
 
-            return View(userManager.Users);
+            AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
+
+            return View(appUserDetailsViewModel);
         }
 
-        public JsonResult GetCities(int CityId)
-        {
-            List<City> citiesList = new List<City>();
-            citiesList = (from cities in _context.Cities
-                          where cities.CountryCityID == CityId
-                          select cities).ToList();
+        //public JsonResult GetCities(Guid CountryId)
+        //{
+        //    List<City> citiesList = new List<City>();
+        //    citiesList = (from cities in _context.Cities
+        //                  where cities.CountryID == CountryId
+        //                  select cities).ToList();
 
-            citiesList.Insert(0, new City { CityId = 0, CityName = "Select" });
+        //    citiesList.Insert(0, new City { Id = Guid.Parse("00000000000000000000000000000000"), CityName = "Select" });
 
-            return Json(new SelectList(citiesList, "CityId", "CityName"));
-        }
+        //    return Json(new SelectList(citiesList, "CityId", "CityName"));
+        //}
 
 
         public ViewResult Create()
@@ -72,8 +75,7 @@ namespace Identity.Controllers
                 {
                     UserName = user.Name,
                     Email = user.Email,
-                    CityId = user.CityId,
-                    CountryId = user.CountryId                    
+                    //CityId = user.CityId
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
@@ -128,9 +130,17 @@ namespace Identity.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
+            //AppUser user = await userManager.FindByIdAsync(id);
+            AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
+
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
-                return View(user);
+            {
+                appUserDetailsViewModel.ListUser = user;
+                ViewData["ListUser"] = user.CityId;
+
+                return View(appUserDetailsViewModel);
+            }
             else
                 return RedirectToAction("Index");
         }
@@ -166,11 +176,16 @@ namespace Identity.Controllers
         }*/
 
         [HttpPost]
-        public async Task<IActionResult> Update(string id, string email, string password)
+        public async Task<IActionResult> Update(string id, string email, string password, Guid cityId)
         {
+            AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
+
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
+                appUserDetailsViewModel.ListUser = user;
+                ViewData["ListUser"] = cityId;
+
                 IdentityResult validEmail = null;
                 if (!string.IsNullOrEmpty(email))
                 {
@@ -207,7 +222,7 @@ namespace Identity.Controllers
             else
                 ModelState.AddModelError("", "User Not Found");
 
-            return View(user);
+            return View(appUserDetailsViewModel);
         }
 
         /*[HttpPost]

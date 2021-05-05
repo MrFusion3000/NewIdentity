@@ -15,7 +15,7 @@ namespace Identity.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -27,20 +27,11 @@ namespace Identity.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CountryName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -85,10 +76,6 @@ namespace Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -102,19 +89,18 @@ namespace Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
+                            Id = "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            CityId = 1,
-                            ConcurrencyStamp = "db6749bc-e6a9-44d6-bdcb-2e2603e40540",
-                            CountryId = 1,
+                            CityId = new Guid("b9d13f75-e69c-452e-93a9-fb31c31d9bd6"),
+                            ConcurrencyStamp = "7b5d79e0-e200-4bb8-ae24-a13211b1fe31",
                             Email = "nico@crepro.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "nico@crepro.com",
                             NormalizedUserName = "nico",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAaOI++AbaLtqVNnrnpxOH/dDRtHKUzhtLaoTfYm8GOjru0zp1ntz/h7b0E1qN1/UQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDSVkSJiFsZWdNlq3rSxJaN6A+dJPcu7J1iyyBazo7dbun5/4RvuXqppQg0Q5HWfrw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "08dacda5-f3bd-4a59-bab4-063383e72d39",
+                            SecurityStamp = "03af6fff-5935-4050-a59c-033196c93e14",
                             TwoFactorEnabled = false,
                             UserName = "nico"
                         });
@@ -122,47 +108,83 @@ namespace Identity.Migrations
 
             modelBuilder.Entity("Identity.Models.City", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryCityID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CountryID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId")
+                    b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dbbe01da-d622-4cd1-ae0d-7f51eb90a779"),
+                            CityName = "Select",
+                            CountryID = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            Id = new Guid("dd51cf28-4765-418a-919a-eae75c9f9f03"),
+                            CityName = "Stockholm",
+                            CountryID = new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b")
+                        },
+                        new
+                        {
+                            Id = new Guid("258d7621-e0db-4958-a098-c400c8c9e0a4"),
+                            CityName = "Göteborg",
+                            CountryID = new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b")
+                        },
+                        new
+                        {
+                            Id = new Guid("f547f442-382b-4abf-8672-fe30f80d4cd1"),
+                            CityName = "Oslo",
+                            CountryID = new Guid("323795fc-498b-4c06-8f25-488ee3916c9d")
+                        },
+                        new
+                        {
+                            Id = new Guid("c569fa64-dc4a-48e2-8c98-3ef4ec60dff6"),
+                            CityName = "Halden",
+                            CountryID = new Guid("323795fc-498b-4c06-8f25-488ee3916c9d")
+                        });
                 });
 
             modelBuilder.Entity("Identity.Models.Country", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CountryName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId")
+                    b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b"),
+                            CountryName = "Sweden"
+                        },
+                        new
+                        {
+                            Id = new Guid("323795fc-498b-4c06-8f25-488ee3916c9d"),
+                            CountryName = "Norway"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -194,8 +216,8 @@ namespace Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6",
-                            ConcurrencyStamp = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6",
+                            Id = "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf",
+                            ConcurrencyStamp = "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf",
                             Name = "SuperAdmin",
                             NormalizedName = "SuperAdmin"
                         });
@@ -288,8 +310,8 @@ namespace Identity.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
-                            RoleId = "341743f0 - asd2–42de - afbf - 59kmkkmk72cf6"
+                            UserId = "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6",
+                            RoleId = "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf"
                         });
                 });
 
@@ -310,21 +332,6 @@ namespace Identity.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Identity.Models.AppUser", b =>
-                {
-                    b.HasOne("Identity.Models.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Identity.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

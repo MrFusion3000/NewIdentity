@@ -9,16 +9,10 @@ namespace Identity.Models
 {
     public class City
     {
-        public int Id { get; set; }
-        public int CityId { get; set; }
-
-        //[ForeignKey("CityId")]
-        //public AppUser AppUser { get; set; }
+        public Guid Id { get; set; }
         public string CityName { get; set; }
-        public int CountryCityID { get; set; }
+        public Guid CountryID { get; set; }
 
         public static List<City> ShowCities { get; set; }
-
-        //public virtual Country Country { get; set; }
     }
 }

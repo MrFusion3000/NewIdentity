@@ -12,8 +12,8 @@ namespace Identity.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<AppUser> userManager;
-        private SignInManager<AppUser> signInManager;
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
 
         public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signinMgr)
         {

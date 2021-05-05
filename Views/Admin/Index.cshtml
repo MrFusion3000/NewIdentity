@@ -1,6 +1,6 @@
-﻿@model IEnumerable<AppUser>
+﻿@model AppUserDetailsViewModel
 
-@using Identity.Models.ViewModels
+@using Identity.Models
 
 <h1 class="bg-info text-white">All Users</h1>
 
@@ -22,21 +22,36 @@
                 <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Country</th>
                 <th>City</th>
+                <th>Country</th>
                 <th>Update</th>
                 <th>Delete</th>
             </tr>
 
-            @foreach (var user in Model)
+            @foreach (var user in AppUserDetailsViewModel.UsersList)
             {
                 <tr>
-                    <td>@user.Id</td>
+                    <td>@user.Id)</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
-                    <td>@user.Country.CountryName</td>
-                    <td>@user.City.CityName</td>
-                    <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">Update</a>
+                    @foreach (var city in AppUserDetailsViewModel.CitiesList)
+                    {
+                        @if (city.Id == user.CityId)
+                        {
+                            <td>@city.CityName</td>
+
+                            @foreach (var country in AppUserDetailsViewModel.CountriesList)
+                            {
+                                if (country.Id == city.CountryID)
+                                {
+                                    <td>@country.CountryName</td>
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">Update</a>
                     </td>
                     <td>
                         <form asp-action="Delete" asp-route-id="@user.Id" method="post">
@@ -57,14 +72,28 @@
                 <th>Country</th>
                 <th>City</th>
             </tr>
-            @foreach (var user in Model)
+            @foreach (var user in AppUserDetailsViewModel.UsersList)
             {
                 <tr>
                     <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
-                    @*<td>@user.CountryName</td>
-                        <td>@user.CityName</td>*@
+                    @foreach (var city in AppUserDetailsViewModel.CitiesList)
+                    {
+                        @if (city.Id == user.CityId)
+                        {
+                            <td>@city.CityName</td>
+
+                            @foreach (var country in AppUserDetailsViewModel.CountriesList)
+                            {
+                                if (country.Id == city.CountryID)
+                                {
+                                    <td>@country.CountryName</td>
+                                }
+                            }
+                            break;
+                        }
+                    }
                 </tr>
             }
         }
