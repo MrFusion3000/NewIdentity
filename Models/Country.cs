@@ -9,5 +9,7 @@ namespace Identity.Models
     {
         public Guid Id { get; set; }
         public string CountryName { get; set; }
+        [NotMapped]
+        public Guid CityId { get; set; }
     }
 }

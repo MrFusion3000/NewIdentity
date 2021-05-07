@@ -67,11 +67,10 @@ namespace Identity.Models
             });
 
             //set countries
+            var CountryGuid0 = Guid.NewGuid();
             var CountryGuid1 = Guid.NewGuid();
             var CountryGuid2 = Guid.NewGuid();
-            //var bytes = new Byte[16];
-            //var CityInitGuid = new Guid(bytes);
-            var CityInitGuid = new Guid();
+            //var CityInitGuid = new Guid();
             var CityGuid1 = Guid.NewGuid();
             var CityGuid2 = Guid.NewGuid();
             var CityGuid3 = Guid.NewGuid();
@@ -79,13 +78,14 @@ namespace Identity.Models
             var CityGuid5 = Guid.NewGuid();
 
             modelBuilder.Entity<Country>().HasData(
+                new Country { Id = CountryGuid0, CountryName = "Select" },
                 new Country { Id = CountryGuid1, CountryName = "Sweden" },
                 new Country { Id = CountryGuid2, CountryName = "Norway" }
                 );
 
             //set cities
             modelBuilder.Entity<City>().HasData(
-                new City {Id = CityGuid1, CityName = "Select", CountryID = CityInitGuid },
+                //new City {Id = CityGuid1, CityName = "Select", CountryID = CityInitGuid },
                 new City {Id = CityGuid2, CityName = "Stockholm", CountryID = CountryGuid1 },
                 new City {Id = CityGuid3, CityName = "Göteborg", CountryID = CountryGuid1 },
                 new City {Id = CityGuid4, CityName = "Oslo", CountryID = CountryGuid2 },

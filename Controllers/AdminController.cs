@@ -19,12 +19,6 @@ namespace Identity.Controllers
         private readonly IUserValidator<AppUser> userValidator;
         private readonly AppIdentityDbContext _context;
 
-        /*public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
-        {
-            userManager = usrMgr;
-            passwordHasher = passwordHash;
-        }*/
-
         public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash, IPasswordValidator<AppUser> passwordVal, IUserValidator<AppUser> userValid, AppIdentityDbContext context)
         {
             userManager = usrMgr;
@@ -36,36 +30,28 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
-            //AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
-
             AppUserDetailsViewModel.UsersList = userManager.Users.ToList();
             AppUserDetailsViewModel.CountriesList = _context.Countries.ToList();
             AppUserDetailsViewModel.CitiesList = _context.Cities.ToList();
 
-
-            //return View(AppUserDetailsViewModel);
             return View(userManager.Users);
 
         }
 
-        //public JsonResult GetCities(Guid CountryId)
-        //{
-        //    List<City> citiesList = new List<City>();
-        //    citiesList = (from cities in _context.Cities
-        //                  where cities.CountryID == CountryId
-        //                  select cities).ToList();
+        public JsonResult GetCities(Guid CountryId)
+        {
+            List<City> citiesList = new List<City>();
+            citiesList = (from cities in _context.Cities
+                          where cities.CountryID == CountryId
+                          select cities).ToList();
 
-        //    citiesList.Insert(0, new City { Id = Guid.Parse("00000000000000000000000000000000"), CityName = "Select" });
+            citiesList.Insert(0, new City { Id = Guid.NewGuid(), CityName = "Select" });
 
-        //    return Json(new SelectList(citiesList, "CityId", "CityName"));
-        //}
-
+            return Json(new SelectList(citiesList, "Id", "CityName"));
+        }
 
         public ViewResult Create()
-        {
-            //Country.ShowCountries = _context.Countries.ToList();
-            //City.ShowCities = _context.Cities.ToList();
-            
+        {            
             return View();
         }
 
