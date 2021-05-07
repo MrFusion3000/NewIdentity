@@ -1,4 +1,4 @@
-﻿@model AppUserDetailsViewModel
+﻿@model IEnumerable<AppUser>
 
 @using Identity.Models
 
@@ -28,7 +28,7 @@
                 <th>Delete</th>
             </tr>
 
-            @foreach (var user in AppUserDetailsViewModel.UsersList)
+            @foreach (var user in Model)
             {
                 <tr>
                     <td>@user.Id)</td>

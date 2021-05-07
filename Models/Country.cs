@@ -9,10 +9,5 @@ namespace Identity.Models
     {
         public Guid Id { get; set; }
         public string CountryName { get; set; }
-        //public int CityId { get; set; }
-
-
-        //public static List<Country> ShowCountries { get; set; }
-
     }
 }

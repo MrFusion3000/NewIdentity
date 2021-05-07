@@ -36,13 +36,16 @@ namespace Identity.Controllers
 
         public IActionResult Index()
         {
+            //AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
+
             AppUserDetailsViewModel.UsersList = userManager.Users.ToList();
             AppUserDetailsViewModel.CountriesList = _context.Countries.ToList();
             AppUserDetailsViewModel.CitiesList = _context.Cities.ToList();
 
-            AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
 
-            return View(appUserDetailsViewModel);
+            //return View(AppUserDetailsViewModel);
+            return View(userManager.Users);
+
         }
 
         //public JsonResult GetCities(Guid CountryId)
@@ -75,7 +78,7 @@ namespace Identity.Controllers
                 {
                     UserName = user.Name,
                     Email = user.Email,
-                    //CityId = user.CityId
+                    CityId = user.CityId
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
@@ -102,90 +105,24 @@ namespace Identity.Controllers
             return View(user);
         }
 
-        /*[HttpPost]
-        public async Task<IActionResult> Create(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                AppUser appUser = new AppUser
-                {
-                    UserName = user.Name,
-                    Email = user.Email,
-                    Country = user.Country,
-                    Age = user.Age,
-                    Salary = user.Salary
-                };
-
-                IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
-                if (result.Succeeded)
-                    return RedirectToAction("Index");
-                else
-                {
-                    foreach (IdentityError error in result.Errors)
-                        ModelState.AddModelError("", error.Description);
-                }
-            }
-            return View(user);
-        }*/
-
         public async Task<IActionResult> Update(string id)
         {
-            //AppUser user = await userManager.FindByIdAsync(id);
-            AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
 
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
-                appUserDetailsViewModel.ListUser = user;
-                ViewData["ListUser"] = user.CityId;
-
-                return View(appUserDetailsViewModel);
+                return View(user);
             }
             else
                 return RedirectToAction("Index");
         }
 
-        /*[HttpPost]
-        public async Task<IActionResult> Update(string id, string email, string password)
-        {
-            AppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
-            {
-                if (!string.IsNullOrEmpty(email))
-                    user.Email = email;
-                else
-                    ModelState.AddModelError("", "Email cannot be empty");
-
-                if (!string.IsNullOrEmpty(password))
-                    user.PasswordHash = passwordHasher.HashPassword(user, password);
-                else
-                    ModelState.AddModelError("", "Password cannot be empty");
-
-                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
-                {
-                    IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                        return RedirectToAction("Index");
-                    else
-                        Errors(result);
-                }
-            }
-            else
-                ModelState.AddModelError("", "User Not Found");
-            return View(user);
-        }*/
-
         [HttpPost]
         public async Task<IActionResult> Update(string id, string email, string password, Guid cityId)
         {
-            AppUserDetailsViewModel appUserDetailsViewModel = new AppUserDetailsViewModel();
-
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
-                appUserDetailsViewModel.ListUser = user;
-                ViewData["ListUser"] = cityId;
-
                 IdentityResult validEmail = null;
                 if (!string.IsNullOrEmpty(email))
                 {
@@ -210,6 +147,8 @@ namespace Identity.Controllers
                 else
                     ModelState.AddModelError("", "Password cannot be empty");
 
+                user.CityId = cityId;
+
                 if (validEmail != null && validPass != null && validEmail.Succeeded && validPass.Succeeded)
                 {
                     IdentityResult result = await userManager.UpdateAsync(user);
@@ -217,12 +156,12 @@ namespace Identity.Controllers
                         return RedirectToAction("Index");
                     else
                         Errors(result);
-                }
+                }                
             }
             else
                 ModelState.AddModelError("", "User Not Found");
 
-            return View(appUserDetailsViewModel);
+            return View(user);
         }
 
         /*[HttpPost]

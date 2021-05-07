@@ -14,14 +14,5 @@ namespace Identity.Models
         public static List<Country> CountriesList { get; set; }
         public static List<City> CitiesList { get; set; }
 
-        //public string GetUserCity(int userCityId)
-        //{
-        //    string UserCity = (from CitiesList in CitiesList )
-        //    return (UserCity);
-        //}
-        //public List<CountriesVM> TempUsersList { get; set; } = new List<CountriesVM>();
-
-
-
     }
 }

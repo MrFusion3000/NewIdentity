@@ -21,7 +21,7 @@ namespace Identity.IdentityPolicy
                     Description = "Password cannot contain username"
                 });
             }
-            if (password.Contains("123"))
+            if (password.Contains("12345"))
             {
                 errors.Add(new IdentityError
                 {

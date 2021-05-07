@@ -1,5 +1,4 @@
-﻿@*@model AppUser*@
-@model AppUserDetailsViewModel
+﻿@model AppUser
 
 <h1 class="bg-info text-white">Update User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
@@ -7,27 +6,28 @@
 
 <form asp-action="Update" method="post">
     <div class="form-group">
-        <label asp-for="ListUser.Id"></label>
-        <input asp-for="ListUser.Id" class="form-control" disabled />
+        <label asp-for="Id"></label>
+        <input asp-for="Id" class="form-control" disabled />
     </div>
     <div class="form-group">
-        <label asp-for="ListUser.UserName"></label>
-        <input asp-for="ListUser.UserName" class="form-control">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control">
     </div>
     <div class="form-group">
-        <label asp-for="ListUser.Email"></label>
-        <input asp-for="ListUser.Email" class="form-control" />
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
     </div>
     <div class="form-group">
         <label for="password">Password</label>
         <input name="password" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="ListUser.Id">City</label>
-        <select asp-for="ListUser.Id" class="form-control" id="CityName">
+        <label asp-for="CityId">City</label>
+        <select asp-for="CityId" class="form-control" id="CityName">
             @foreach (var city in AppUserDetailsViewModel.CitiesList)
             {
-                if (city.Id == Guid.Parse(ViewData["ListUser"].ToString()))
+                if (city.Id == Model.CityId)
+
                 {
                     <option selected="selected" value="@city.Id">
                         @city.CityName

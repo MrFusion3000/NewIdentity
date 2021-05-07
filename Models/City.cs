@@ -12,7 +12,5 @@ namespace Identity.Models
         public Guid Id { get; set; }
         public string CityName { get; set; }
         public Guid CountryID { get; set; }
-
-        public static List<City> ShowCities { get; set; }
     }
 }
