@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Identity.Controllers
 {
@@ -35,23 +36,10 @@ namespace Identity.Controllers
             AppUserDetailsViewModel.CitiesList = _context.Cities.ToList();
 
             return View(userManager.Users);
-
-        }
-
-        public JsonResult GetCities(Guid CountryId)
-        {
-            List<City> citiesList = new List<City>();
-            citiesList = (from cities in _context.Cities
-                          where cities.CountryID == CountryId
-                          select cities).ToList();
-
-            citiesList.Insert(0, new City { Id = Guid.NewGuid(), CityName = "Select" });
-
-            return Json(new SelectList(citiesList, "Id", "CityName"));
         }
 
         public ViewResult Create()
-        {            
+        {
             return View();
         }
 
@@ -88,7 +76,9 @@ namespace Identity.Controllers
                         ModelState.AddModelError("", error.Description);
                 }
             }
-            return View(user);
+            //return View(user);
+            return RedirectToAction("Index");
+
         }
 
         public async Task<IActionResult> Update(string id)

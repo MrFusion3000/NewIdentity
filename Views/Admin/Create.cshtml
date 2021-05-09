@@ -1,35 +1,14 @@
 ﻿@model User
 
-<script src="/lib/jquery//dist/jquery.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#Country.Id').change(function () {
-            var url = '@Url.Content("~/")' + "Admin/GetCities";
-            var ddlsource = "#CountryId";
-            $.getJSON(url, { CountryId: $(ddlsource).val() }, function (data) {
-                var items = '';
-                $("#Id").empty();
-                $.each(data, function (i, citiesList) {
-                    items += "<option value='" + citiesList.value + "'>" + citiesList.text + "</option>";
-                });
-                $('#CityId').html(items);
-            });
-    });
-</script>
-
-@*<script type="text/javascript">
-    $(document).ready(function () {
-        var items = "<option value ='0'>Select</option>";
-        $('#CityId').html(items);
-    });
-</script>*@
+<script src="/lib/jquery/dist/jquery.js"></script>
 
 <h1 class="bg-info text-white">Create User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post">
+@*<form method="post">*@
+<form asp-controller="Admin" asp-action="Create" method="post" class="form-horizontal" role="form">
+
     <div class="form-group">
         <label asp-for="Name">Username</label>
         <input asp-for="Name" class="form-control" />
@@ -45,13 +24,13 @@
     <div class="form-group">
         <label asp-for="Country.CountryName" class="control-label"></label>
         <select asp-for="Country.Id"
-                class="form-control"  
+                class="form-control"
                 asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
     </div>
     <div class="form-group">
         <label class="control-label">City</label>
-        <select class="form-control" id="CityId" name="CityId" asp-for="City.Id"  
-                asp-items="@(new SelectList(string.Empty, "Id", "CityName"))"></select>
+        <select class="form-control" id="CityId" name="CityId" asp-for="City.Id"
+                asp-items="@(new SelectList(AppUserDetailsViewModel.CitiesList, "Id", "CityName"))"></select>
     </div>
 
 

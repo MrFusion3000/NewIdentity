@@ -85,7 +85,7 @@ namespace Identity.Models
 
             //set cities
             modelBuilder.Entity<City>().HasData(
-                //new City {Id = CityGuid1, CityName = "Select", CountryID = CityInitGuid },
+                new City {Id = CityGuid1, CityName = "Deje", CountryID = CountryGuid1 },
                 new City {Id = CityGuid2, CityName = "Stockholm", CountryID = CountryGuid1 },
                 new City {Id = CityGuid3, CityName = "Göteborg", CountryID = CountryGuid1 },
                 new City {Id = CityGuid4, CityName = "Oslo", CountryID = CountryGuid2 },
