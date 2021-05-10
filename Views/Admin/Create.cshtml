@@ -2,6 +2,18 @@
 
 <script src="/lib/jquery/dist/jquery.js"></script>
 
+<script type="text/javascript">
+
+    $(function () {
+        $('#myddl').change(function () {
+            var url = $(this).data('/Admin/Foo');
+            var value = $(this).val();
+            $('#result').load(url, { value: value })
+            /*$('#myddl2').load = this.value*/            
+        });
+    });
+</script>
+
 <h1 class="bg-info text-white">Create User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
@@ -33,6 +45,22 @@
                 asp-items="@(new SelectList(AppUserDetailsViewModel.CitiesList, "Id", "CityName"))"></select>
     </div>
 
+    @Html.DropDownListFor(
+    x => x.Country,
+    new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"),
+    new { id = "myddl", data_url = Url.Action("Foo", "Admin") }
+    )
+
+    
+    @* Change this!
+        @Html.DropDownListFor(x => x.CityId, 
+    new SelectList(),
+    new { id = "myddl2", data_url = Url.Action("Foo", "Admin") }
+    )*@
+
+    <div id="result"></div>
+
+    <partial name="_CreatePartial.cshtml" />
 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

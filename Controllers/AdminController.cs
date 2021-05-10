@@ -81,6 +81,18 @@ namespace Identity.Controllers
 
         }
 
+        public ActionResult Foo(Guid Id)
+        {
+            var cities = from city in _context.Cities
+                         where city.CountryID == Id
+                         select new { city.Id, city.CityName };
+
+            //AppUserDetailsViewModel.CitiesList = cities;
+            var citiesList = cities.ToList();
+
+            return PartialView(citiesList);
+        }
+
         public async Task<IActionResult> Update(string id)
         {
 
