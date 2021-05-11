@@ -1,0 +1,23 @@
+﻿@model Identity.Models.UserCountriesCitiesVM
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(x => x.SelectedMainCatId, new SelectList(Model.Countries, "Value", "Text"), "Select Main..")
+    @Html.DropDownListFor(x => x.SelectedSubCatId, new SelectList(Model.Cities, "Value", "Text"), "Select Sub..")
+    <button type="submit">Save</button>
+}
+<script type="text/javascript">
+    $(function () {
+        $("#SelectedMainCatId").change(function () {
+            var val = $(this).val();
+            var subItems="";
+            $.getJSON("@Url.Action("GetSub","Product")", {id:val} ,function (data) {
+              $.each(data,function(index,item){
+                subItems+="<option value='"+item.Value+"'>"+item.Text+"</option>"
+              });
+              $("#SelectedSubCatId").html(subItems)
+            });
+        });
+    });
+</script>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Identity.Models
@@ -17,9 +19,14 @@ namespace Identity.Models
 
         [Required]
         public Guid CityId { get; set; }
+        public IEnumerable<SelectListItem> City { get; set; }
+        [Required]
+        public Guid CountryId { get; set; }
+        public IEnumerable<SelectListItem> Country { get; set; }
 
-        public virtual Country Country { get; set; }
-        public virtual City City { get; set; }
+
+        public virtual Country Countries { get; set; }
+        public virtual City Cities { get; set; }
 
     }
 }

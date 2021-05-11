@@ -2,18 +2,6 @@
 
 <script src="/lib/jquery/dist/jquery.js"></script>
 
-<script type="text/javascript">
-
-    $(function () {
-        $('#myddl').change(function () {
-            var url = $(this).data('/Admin/Foo');
-            var value = $(this).val();
-            $('#result').load(url, { value: value })
-            /*$('#myddl2').load = this.value*/            
-        });
-    });
-</script>
-
 <h1 class="bg-info text-white">Create User</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
@@ -34,33 +22,25 @@
         <input asp-for="Password" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Country.CountryName" class="control-label"></label>
-        <select asp-for="Country.Id"
+        <label asp-for="Countries.CountryName" class="control-label"></label>
+        <select asp-for="Countries.Id"
                 class="form-control"
                 asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
     </div>
     <div class="form-group">
         <label class="control-label">City</label>
-        <select class="form-control" id="CityId" name="CityId" asp-for="City.Id"
+        <select class="form-control" id="CityId" name="CityId" asp-for="Cities.Id"
                 asp-items="@(new SelectList(AppUserDetailsViewModel.CitiesList, "Id", "CityName"))"></select>
     </div>
 
-    @Html.DropDownListFor(
-    x => x.Country,
-    new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"),
-    new { id = "myddl", data_url = Url.Action("Foo", "Admin") }
-    )
-
-    
-    @* Change this!
-        @Html.DropDownListFor(x => x.CityId, 
-    new SelectList(),
-    new { id = "myddl2", data_url = Url.Action("Foo", "Admin") }
-    )*@
-
-    <div id="result"></div>
-
-    <partial name="_CreatePartial.cshtml" />
 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.Countries.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-5">
+        @Html.DropDownListFor(x => x.Countries.Id, new SelectList(AppUserDetailsViewModel.CountriesList, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Country" })
+        @Html.ValidationMessageFor(x => x.Countries.Id, "", new { @class = "text-danger" })
+    </div>
+</div>
