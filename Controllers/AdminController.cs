@@ -84,7 +84,6 @@ namespace Identity.Controllers
         public ActionResult GetSelectedValue(string id)
         {
             var testSendId = id;
-            Console.WriteLine("Value" + testSendId);
 
             return View(testSendId);
         }
