@@ -22,7 +22,7 @@
         <input asp-for="Password" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Countries.CountryName" class="control-label"></label>
+        <label class="control-label">Country</label>
         <select class="form-control" id="CountryId" name="CountryId" asp-for="Countries.Id"                
                 asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
     </div>
@@ -43,15 +43,23 @@
             var id = $(this).find(":selected").val()
             var selectid = { "id": id }
             $.ajax({
-                url: "/Admin/GetSelectedValue",
-                data: JSON.stringify(selectid),
                 type: 'POST',
-                contentType: 'application/json; charset=utf-8',
+                url: "/Admin/GetSelectedValue",
+                data: { id: id },
+                dataType: "text",
+                
+                //contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     // Variable data contains the data you get from the action method
+                    alert("Success: " + id + "\n " + selectid + "\n " + data)
+                },
+                error: function (data){
+                    alert("Error:\n id: " + id + "\nselectid: " + selectid + "\ndata: " + data)
+
                 }
             });
         });
     }); 
 </script>
 
+<div id="data"></div>
