@@ -40,6 +40,9 @@ namespace Identity.Controllers
 
         public ViewResult Create()
         {
+            var Countries = AppUserDetailsViewModel.CountriesList;
+            ViewData["Countries"] = Countries;
+
             return View();
         }
 
@@ -76,16 +79,43 @@ namespace Identity.Controllers
                         ModelState.AddModelError("", error.Description);
                 }
             }
+
             //return View(user);
             return RedirectToAction("Index");
 
         }
 
-        public ActionResult GetSelectedValue(string id)
-        {
-            var testSendId = id;
 
-            return View(testSendId);
+        //public ActionResult GetSelectedValue(string id)
+        //{
+        //    var testSendId = id;
+
+        //    var cities = from city in _context.Cities
+        //                 where city.CountryID == Guid.Parse(id)
+        //                 select city;
+
+
+        //    return Json(new { cities = cities });
+        //}
+
+        public ActionResult GetSelectedCity(string id)
+        {
+            if (id != null)
+            {
+                var cities = from city in _context.Cities
+                             where city.CountryID == Guid.Parse(id)
+                             select city;
+                return Json(cities);
+
+            }
+            else
+            {
+                var cities = _context.Cities;
+                return Json(cities);
+
+            }
+
+            //return Json(cities);
         }
 
         public async Task<IActionResult> Update(string id)

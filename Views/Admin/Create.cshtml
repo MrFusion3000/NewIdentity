@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Country</label>
-        <select class="form-control" id="CountryId" name="CountryId" asp-for="Countries.Id"                
+        <select class="form-control" id="CountryId" name="CountryId" asp-for="Countries.Id"
                 asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
     </div>
     <div class="form-group">
@@ -37,29 +37,102 @@
 </form>
 
 
-<script>
-    jQuery(document).ready(function () {
-        $("#CountryId").change(function () {
-            var id = $(this).find(":selected").val()
-            var selectid = { "id": id }
-            $.ajax({
-                type: 'POST',
-                url: "/Admin/GetSelectedValue",
-                data: { id: id },
-                dataType: "text",
-                
-                //contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    // Variable data contains the data you get from the action method
-                    alert("Success: " + id + "\n " + selectid + "\n " + data)
-                },
-                error: function (data){
-                    alert("Error:\n id: " + id + "\nselectid: " + selectid + "\ndata: " + data)
+@*<script>
+        jQuery(document).ready(function () {
+            $("#CountryId").change(function () {
+                var id = $(this).find(":selected").val()
+                var selectid = { "id": id }
+                $.ajax({
+                    type: 'POST',
+                    url: "/Admin/GetSelectedCity",
+                    data: { id: id },
+                    dataType: "text",
 
-                }
+                    //contentType: 'application/json; charset=utf-8',
+                    success: function (cities) {
+                        // Variable data contains the data you get from the action method
+                        alert("Success: " + data + "\n " + msg + "\n " + cities)
+                        console.log(cities);
+
+                    },
+                    error: function (data){
+                        alert("Error:\n id: " + id + "\nselectid: " + selectid + "\ndata: " + data)
+
+                    }
+                });
             });
         });
-    }); 
+    </script>*@
+
+<script>
+    $(document).ready(function () {
+        $("#State").prop("disabled", true);
+        $("#Country").change(function () {
+            if ($("Country").val() != "Select") {
+                var id = $(this).find(":selected").val()
+                var CountryOptions = {};
+                CountryOptions.url = "/Admin/GetSelectedCity";
+                CountryOptions.type = "POST";
+                CountryOptions.data = { id: id };
+                CountryOptions.datatype = "text";
+                /*CountryOptions.contentType = "application/json";*/
+                CountryOptions.success = function (cities) {
+                    $("#State").empty();
+                    var obj = $.parseJSON(cities);
+                    $.each(obj, function () {
+                        CId += this['CityName'] + "<option>" + this.['Id'] + "</option>";
+                    });
+                    $('#State').html(CId);
+                    
+                    for (var i = 0; i < cities.length; i++) {                       
+                        $("#State").append("<option>" + cities[i] + "</option>");
+                    }
+                    $("#State").prop("disabled", false);
+                };
+
+                CountryOptions.error = function () {
+                    alert("Error in Getting States!!");
+                };
+                $.ajax(CountryOptions);
+            } else {
+                $("#State").empty();
+                $("#State").prop("disabled", true);
+            }
+        });
+    });
 </script>
 
-<div id="data"></div>
+
+@using (Html.BeginForm("Index", "Sample", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h4> Select Country & States </h4>
+    <hr />
+    @Html.ValidationSummary()
+<div class="form-group">
+    @*@Html.Label("Select Country:", new { @class = "col-md-2 control-label" })*@
+    @*<div class="col-md-10">
+        @Html.DropDownList("Country", ViewData["Countries"] as SelectList, new
+       {
+           @class = "form-control"
+       })
+    </div>*@
+    <div class="form-group">
+    <label class="control-label">Country</label>
+    <select class="form-control" id="Country" name="Country" asp-for="Countries.Id"
+            asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
+</div>
+    </div>
+    <br />
+    <div class="form-group">
+        @*@Html.Label("Select States:", new { @class = "col-md-2 control-label" })*@
+        <div class="col-md-10">
+            <select id="State"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
