@@ -76,18 +76,14 @@
                 CountryOptions.data = { id: id };
                 CountryOptions.datatype = "text";
                 /*CountryOptions.contentType = "application/json";*/
-                CountryOptions.success = function (cities) {
-                    $("#State").empty();
-                    //var obj = $.parseJSON(cities);
-                    //$.each(obj, function () {
-                    //    CId += this['CityName'] + "<option>" + this.['Id'] + "</option>";
-                    //});
-                    //$('#State').html(CId);
-                    
+                CountryOptions.success = function (data) {
+                    $("#City").empty();
+                    var loadPath = JSON.parse(cities);
+                    alert(loadPath[0].Text);                    
                     for (var i = 0; i < cities.length; i++) {                       
-                        $("#State").append("<option>" + cities[i] + "</option>");
+                        $("#City").append('<option value="' + cities.Value + '">' + cities.Text + '</option>');
                     }
-                    $("#State").prop("disabled", false);
+                    $("#City").prop("disabled", false);
                 };
 
                 CountryOptions.error = function () {
@@ -95,20 +91,16 @@
                 };
                 $.ajax(CountryOptions);
             } else {
-                $("#State").empty();
-                $("#State").prop("disabled", true);
+                $("#City").empty();
+                $("#City").prop("disabled", true);
             }
         });
     });
 </script>
 
 
-@using (Html.BeginForm("GetSelectedCity", "Admin", FormMethod.Post))
+@using (Html.BeginForm("GetSelectedCity", "Admin", FormMethod.Get))
 {
-    @Html.AntiForgeryToken()
-    <h4> Select Country & States </h4>
-    <hr />
-    @Html.ValidationSummary()
 <div class="form-group">
 
     <div class="form-group">
@@ -121,7 +113,7 @@
     <div class="form-group">
         @*@Html.Label("Select States:", new { @class = "col-md-2 control-label" })*@
         <div class="col-md-10">
-            <select id="State"></select>
+            <select id="City"></select>
         </div>
     </div>
     <div class="form-group">
