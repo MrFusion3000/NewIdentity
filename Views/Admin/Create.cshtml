@@ -78,11 +78,11 @@
                 /*CountryOptions.contentType = "application/json";*/
                 CountryOptions.success = function (cities) {
                     $("#State").empty();
-                    var obj = $.parseJSON(cities);
-                    $.each(obj, function () {
-                        CId += this['CityName'] + "<option>" + this.['Id'] + "</option>";
-                    });
-                    $('#State').html(CId);
+                    //var obj = $.parseJSON(cities);
+                    //$.each(obj, function () {
+                    //    CId += this['CityName'] + "<option>" + this.['Id'] + "</option>";
+                    //});
+                    //$('#State').html(CId);
                     
                     for (var i = 0; i < cities.length; i++) {                       
                         $("#State").append("<option>" + cities[i] + "</option>");
@@ -103,20 +103,14 @@
 </script>
 
 
-@using (Html.BeginForm("Index", "Sample", FormMethod.Post))
+@using (Html.BeginForm("GetSelectedCity", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <h4> Select Country & States </h4>
     <hr />
     @Html.ValidationSummary()
 <div class="form-group">
-    @*@Html.Label("Select Country:", new { @class = "col-md-2 control-label" })*@
-    @*<div class="col-md-10">
-        @Html.DropDownList("Country", ViewData["Countries"] as SelectList, new
-       {
-           @class = "form-control"
-       })
-    </div>*@
+
     <div class="form-group">
     <label class="control-label">Country</label>
     <select class="form-control" id="Country" name="Country" asp-for="Countries.Id"

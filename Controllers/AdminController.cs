@@ -102,9 +102,17 @@ namespace Identity.Controllers
         {
             if (id != null)
             {
-                var cities = from city in _context.Cities
+                List<SelectListItem> cities = new List<SelectListItem>();
+
+                var citiesFilter = from city in _context.Cities
                              where city.CountryID == Guid.Parse(id)
                              select city;
+
+                foreach (var item in citiesFilter)
+                {
+                    cities.Add(new SelectListItem { Text = item.CityName, Value = item.Id.ToString("D") });
+                }
+
                 return Json(cities);
 
             }
