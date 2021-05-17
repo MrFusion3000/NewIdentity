@@ -66,7 +66,8 @@
 
 <script>
     $(document).ready(function () {
-        $("#State").prop("disabled", true);
+        debugger;
+        $("#City").prop("disabled", true);
         $("#Country").change(function () {
             if ($("Country").val() != "Select") {
                 var id = $(this).find(":selected").val()
@@ -75,17 +76,15 @@
                 CountryOptions.type = "POST";
                 CountryOptions.data = { id: id };
                 CountryOptions.datatype = "text";
-                /*CountryOptions.contentType = "application/json";*/
-                CountryOptions.success = function (data) {
+                CountryOptions.success = function (cities) {
                     $("#City").empty();
-                    var loadPath = JSON.parse(cities);
-                    alert(loadPath[0].Text);                    
-                    for (var i = 0; i < cities.length; i++) {                       
-                        $("#City").append('<option value="' + cities.Value + '">' + cities.Text + '</option>');
+                    const cit = JSON.stringify(cities)
+                    var loadPath = JSON.parse(cit);
+                    for (var i = 0; i < loadPath.length; i++) {                       
+                        $("#City").append('<option value="' + loadPath[i].value + '">' + loadPath[i].text + '</option>');
                     }
                     $("#City").prop("disabled", false);
                 };
-
                 CountryOptions.error = function () {
                     alert("Error in Getting States!!");
                 };
@@ -111,10 +110,11 @@
     </div>
     <br />
     <div class="form-group">
-        @*@Html.Label("Select States:", new { @class = "col-md-2 control-label" })*@
-        <div class="col-md-10">
-            <select id="City"></select>
-        </div>
+        <label class="control-label">City</label>
+        <select class="form-control" id="City" name="City" asp-for="Cities.Id"></select>
+
+        @*<select id="City"></select>*@
+
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

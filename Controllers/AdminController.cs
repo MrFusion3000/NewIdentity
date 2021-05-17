@@ -103,7 +103,7 @@ namespace Identity.Controllers
             if (id != null)
             {
                 List<SelectListItem> cities = new List<SelectListItem>();
-                cities.Add(new SelectListItem { Text = "Select", Value = "0" });
+                cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
 
                 var citiesFilter = from city in _context.Cities
                              where city.CountryID == Guid.Parse(id)
@@ -114,8 +114,7 @@ namespace Identity.Controllers
                     cities.Add(new SelectListItem { Text = item.CityName, Value = item.Id.ToString("D") });
                 }
 
-                //return Json(new SelectList(cities, "Value", "Text"));
-                return Json("Value", "Text");
+                return Json(cities);
 
             }
             else
@@ -125,7 +124,6 @@ namespace Identity.Controllers
 
             }
 
-            //return Json(cities);
         }
 
         public async Task<IActionResult> Update(string id)
