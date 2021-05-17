@@ -85,53 +85,32 @@ namespace Identity.Controllers
 
         }
 
-
-        //public ActionResult GetSelectedValue(string id)
-        //{
-        //    var testSendId = id;
-
-        //    var cities = from city in _context.Cities
-        //                 where city.CountryID == Guid.Parse(id)
-        //                 select city;
-
-
-        //    return Json(new { cities = cities });
-        //}
-
         public ActionResult GetSelectedCity(string id)
         {
-            if (id != null)
+            List<SelectListItem> cities = new List<SelectListItem>();
+
+            //cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
+
+            var citiesFilter = from city in _context.Cities
+                               where city.CountryID == Guid.Parse(id)
+                               select city;
+
+            foreach (var item in citiesFilter)
             {
-                List<SelectListItem> cities = new List<SelectListItem>();
-                cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
-
-                var citiesFilter = from city in _context.Cities
-                             where city.CountryID == Guid.Parse(id)
-                             select city;
-
-                foreach (var item in citiesFilter)
-                {
-                    cities.Add(new SelectListItem { Text = item.CityName, Value = item.Id.ToString("D") });
-                }
-
-                return Json(cities);
-
-            }
-            else
-            {
-                var cities = _context.Cities;
-                return Json(cities);
-
+                cities.Add(new SelectListItem { Text = item.CityName, Value = item.Id.ToString("D") });
             }
 
+            return Json(cities);
         }
 
         public async Task<IActionResult> Update(string id)
         {
-
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
+                
+
+
                 return View(user);
             }
             else

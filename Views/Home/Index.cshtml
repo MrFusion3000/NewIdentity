@@ -1,9 +1,109 @@
-﻿@model string
+﻿@model IEnumerable<AppUser>
 
 <h1 class="bg-info text-white">Index</h1>
 @Model
 
 @if (User?.Identity?.IsAuthenticated ?? false)
+{
+    <h1 class="bg-info text-white">All Users</h1>
+    }
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("SuperAdmin"))
+    {
+        <p>
+            <a asp-action="Create" class="btn btn-secondary">Create a User</a>
+        </p>
+    }
+}
+<table class="table table-sm table-bordered">
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("SuperAdmin"))
+        {
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id)</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    @foreach (var city in AppUserDetailsViewModel.CitiesList)
+                    {
+                        @if (city.Id == user.CityId)
+                        {
+                            <td>@city.CityName</td>
+
+                            @foreach (var country in AppUserDetailsViewModel.CountriesList)
+                            {
+                                if (country.Id == city.CountryID)
+                                {
+                                    <td>@country.CountryName</td>
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">Update</a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Country</th>
+                <th>City</th>
+            </tr>
+            @foreach (var user in AppUserDetailsViewModel.UsersList)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    @foreach (var city in AppUserDetailsViewModel.CitiesList)
+                    {
+                        @if (city.Id == user.CityId)
+                        {
+                            <td>@city.CityName</td>
+
+                            @foreach (var country in AppUserDetailsViewModel.CountriesList)
+                            {
+                                if (country.Id == city.CountryID)
+                                {
+                                    <td>@country.CountryName</td>
+                                }
+                            }
+                            break;
+                        }
+                    }
+                </tr>
+            }
+        }
+
+    }
+</table>
 { <p>
     <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
 </p>

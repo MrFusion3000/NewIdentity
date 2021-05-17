@@ -1,66 +1,128 @@
 ﻿@model AppUser
 
-<h1 class="bg-info text-white">Update User</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
-<div asp-validation-summary="All" class="text-danger"></div>
+    <script src="/lib/jquery/dist/jquery.js"></script>
 
-<form asp-action="Update" method="post">
-    <div class="form-group">
-        <label asp-for="Id"></label>
-        <input asp-for="Id" class="form-control" disabled />
-    </div>
-    <div class="form-group">
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" class="form-control">
-    </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input name="password" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="CityId">City</label>
-        <select asp-for="CityId" class="form-control" id="CityName">
-            @foreach (var city in AppUserDetailsViewModel.CitiesList)
-            {
-                if (city.Id == Model.CityId)
 
-                {
-                    <option selected="selected" value="@city.Id">
-                        @city.CityName
-                    </option>
-                }
-                else
-                {
-                    <option value="@city.Id">
-                        @city.CityName
-                    </option>
-                }
+    <h1 class="bg-info text-white">Update User</h1>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-            }
-        </select>
-    </div>
-    @*<div class="form-group">
-            <label asp-for="Country.Id">Country</label>
-            <select asp-for="Country.Id" class="form-control" id="CountryName">
-                @foreach (var country in Country.ShowCountries)
+    <form asp-action="Update" method="post">
+        <div class="form-group">
+            <label asp-for="Id"></label>
+            <input asp-for="Id" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input name="Password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="CityId">City</label>
+            <select asp-for="CityId" class="form-control" id="CityName">
+                @foreach (var city in AppUserDetailsViewModel.CitiesList)
                 {
-                    <option value="@country.Id">
-                        @country.CountryName
-                    </option>
+                    if (city.Id == Model.CityId)
+
+                    {
+                        <option selected="selected" value="@city.Id">
+                            @city.CityName
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@city.Id">
+                            @city.CityName
+                        </option>
+                    }
+
                 }
             </select>
-        </div>*@
+        </div>
+        <div class="form-group">
+            <label class="control-label">Country</label>
+            <select class="form-control" id="Country" name="Country" asp-for="CountryName">
+                    @foreach (var country in AppUserDetailsViewModel.CountriesList)
+                {
+                    if (country.Id == Model.CityId)
 
-    @*<div class="form-group">
-            <label asp-for="Country"></label>
-            <select asp-for="Country" class="form-control" asp-items="@new SelectList(Enum.GetNames(typeof(Country)))">
-                <option selected disabled value="Select">Select Country</option>
+                    {
+                        <option selected="selected" value="@country.Id">
+                            @country.CountryName
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@country.Id">
+                            @country.CountryName
+                        </option>
+                    }
+
+                }</select>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="control-label">City</label>
+            <select class="form-control" id="City" name="CityId" asp-for="CityId">
+                @foreach (var city in AppUserDetailsViewModel.CitiesList)
+                {
+                    if (city.Id == Model.CityId)
+
+                    {
+                        <option selected="selected" value="@city.Id">
+                            @city.CityName
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@city.Id">
+                            @city.CityName
+                        </option>
+                    }
+
+                }
             </select>
-        </div>*@
+        </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            debugger;
+            $("#City").prop("disabled", true);
+            $("#Country").change(function () {
+                if ($("Country").val() != "Select") {
+                    var id = $(this).find(":selected").val()
+                    var CountryOptions = {};
+                    CountryOptions.url = "/Admin/GetSelectedCity";
+                    CountryOptions.type = "POST";
+                    CountryOptions.data = { id: id };
+                    CountryOptions.datatype = "text";
+                    CountryOptions.success = function (cities) {
+                        $("#City").empty();
+                        const cit = JSON.stringify(cities)
+                        var loadPath = JSON.parse(cit);
+                        for (var i = 0; i < loadPath.length; i++) {
+                            $("#City").append('<option value="' + loadPath[i].value + '">' + loadPath[i].text + '</option>');
+                        }
+                        $("#City").prop("disabled", false);
+                    };
+                    CountryOptions.error = function () {
+                        alert("Error in Getting States!!");
+                    };
+                    $.ajax(CountryOptions);
+                } else {
+                    $("#City").empty();
+                    $("#City").prop("disabled", true);
+                }
+            });
+        });
+    </script>

@@ -15,6 +15,5 @@ namespace Identity.Models
         public string CountryName { get; internal set; }
         [NotMapped]
         public string CityName { get; internal set; }
-
     }
 }

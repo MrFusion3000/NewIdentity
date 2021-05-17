@@ -22,47 +22,22 @@
         <input asp-for="Password" class="form-control" />
     </div>
     <div class="form-group">
-        <label class="control-label">Country</label>
-        <select class="form-control" id="CountryId" name="CountryId" asp-for="Countries.Id"
-                asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
+
+        <div class="form-group">
+            <label class="control-label">Country</label>
+            <select class="form-control" id="Country" name="Country" asp-for="Countries.Id"
+                    asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
+        </div>
     </div>
+    <br />
     <div class="form-group">
         <label class="control-label">City</label>
-        <select class="form-control" id="CityId" name="CityId" asp-for="Cities.Id"
-                asp-items="@(new SelectList(AppUserDetailsViewModel.CitiesList, "Id", "CityName"))"></select>
+        <select class="form-control" id="City" name="CityId" asp-for="Cities.Id"></select>
     </div>
-
 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
-
-@*<script>
-        jQuery(document).ready(function () {
-            $("#CountryId").change(function () {
-                var id = $(this).find(":selected").val()
-                var selectid = { "id": id }
-                $.ajax({
-                    type: 'POST',
-                    url: "/Admin/GetSelectedCity",
-                    data: { id: id },
-                    dataType: "text",
-
-                    //contentType: 'application/json; charset=utf-8',
-                    success: function (cities) {
-                        // Variable data contains the data you get from the action method
-                        alert("Success: " + data + "\n " + msg + "\n " + cities)
-                        console.log(cities);
-
-                    },
-                    error: function (data){
-                        alert("Error:\n id: " + id + "\nselectid: " + selectid + "\ndata: " + data)
-
-                    }
-                });
-            });
-        });
-    </script>*@
 
 <script>
     $(document).ready(function () {
@@ -96,29 +71,3 @@
         });
     });
 </script>
-
-
-@using (Html.BeginForm("GetSelectedCity", "Admin", FormMethod.Get))
-{
-<div class="form-group">
-
-    <div class="form-group">
-    <label class="control-label">Country</label>
-    <select class="form-control" id="Country" name="Country" asp-for="Countries.Id"
-            asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
-</div>
-    </div>
-    <br />
-    <div class="form-group">
-        <label class="control-label">City</label>
-        <select class="form-control" id="City" name="City" asp-for="Cities.Id"></select>
-
-        @*<select id="City"></select>*@
-
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Submit" />
-        </div>
-    </div>
-}

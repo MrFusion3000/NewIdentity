@@ -11,7 +11,7 @@ namespace Identity.Controllers
 {
     public class HomeController : Controller
     {
-        private UserManager<AppUser> userManager;
+        private readonly UserManager<AppUser> userManager;
         public HomeController(UserManager<AppUser> userMgr)
         {
             userManager = userMgr;
@@ -28,8 +28,9 @@ namespace Identity.Controllers
         public async Task<IActionResult> Index()
         {
             AppUser user = await userManager.GetUserAsync(HttpContext.User);
-            string message = "Hello " + user.UserName;
-            return View((object)message);
+            //string message = "Hello " + user.UserName;
+            
+            return View(user);
         }
     }
 }
