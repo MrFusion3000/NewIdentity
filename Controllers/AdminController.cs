@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using Identity.Email;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using Microsoft.AspNetCore.Http;
 
 namespace Identity.Controllers
 {

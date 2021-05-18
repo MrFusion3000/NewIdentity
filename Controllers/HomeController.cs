@@ -12,9 +12,13 @@ namespace Identity.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<AppUser> userManager;
-        public HomeController(UserManager<AppUser> userMgr)
+        private readonly AppIdentityDbContext _context;
+
+        public HomeController(UserManager<AppUser> usrMgr, AppIdentityDbContext context)
         {
-            userManager = userMgr;
+            userManager = usrMgr;
+            _context = context;
+
         }
 
         /*[Authorize]
@@ -29,8 +33,12 @@ namespace Identity.Controllers
         {
             AppUser user = await userManager.GetUserAsync(HttpContext.User);
             //string message = "Hello " + user.UserName;
-            
-            return View(user);
+            AppUserDetailsViewModel.UsersList = userManager.Users.ToList();
+            AppUserDetailsViewModel.CountriesList = _context.Countries.ToList();
+            AppUserDetailsViewModel.CitiesList = _context.Cities.ToList();
+
+
+            return View(userManager.Users);
         }
     }
 }
