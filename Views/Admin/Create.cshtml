@@ -41,7 +41,7 @@
 
 <script>
     $(document).ready(function () {
-        debugger;
+        //debugger;
         $("#City").prop("disabled", true);
         $("#Country").change(function () {
             if ($("Country").val() != "Select") {
@@ -61,7 +61,7 @@
                     $("#City").prop("disabled", false);
                 };
                 CountryOptions.error = function () {
-                    alert("Error in Getting States!!");
+                    alert("Error in Getting cities!!");
                 };
                 $.ajax(CountryOptions);
             } else {

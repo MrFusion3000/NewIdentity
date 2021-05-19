@@ -38,7 +38,8 @@ namespace Identity.Controllers
             AppUserDetailsViewModel.CitiesList = _context.Cities.ToList();
 
 
-            return View(userManager.Users);
+            //return View(userManager.Users);
+            return Redirect("~/Admin/Index");
         }
     }
 }

@@ -38,8 +38,19 @@ namespace Identity.Controllers
 
         public ViewResult Create()
         {
-            var Countries = AppUserDetailsViewModel.CountriesList;
-            ViewData["Countries"] = Countries;
+            //var Countries = AppUserDetailsViewModel.CountriesList;
+
+            List<SelectListItem> countries = new List<SelectListItem>();
+
+            countries.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
+            var countriesFilter = from country in _context.Countries
+                                  select country;
+            foreach (var item in countriesFilter)
+            {
+                countries.Add(new SelectListItem { Text = item.CountryName, Value = item.Id.ToString("D") });
+            }
+
+            ViewData["Countries"] = new SelectList(countries, "Id", "CountryName");
 
             return View();
         }
@@ -87,7 +98,7 @@ namespace Identity.Controllers
         {
             List<SelectListItem> cities = new List<SelectListItem>();
 
-            //cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
+            cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
 
             var citiesFilter = from city in _context.Cities
                                where city.CountryID == Guid.Parse(id)
