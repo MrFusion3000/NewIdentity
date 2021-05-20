@@ -26,7 +26,8 @@
         <div class="form-group">
             <label class="control-label">Country</label>
             <select class="form-control" id="Country" name="Country" asp-for="Countries.Id"
-                    asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName"))"></select>
+                    asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName" ))"></select>
+
         </div>
     </div>
     <br />
@@ -37,7 +38,6 @@
 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
-
 
 <script>
     $(document).ready(function () {

@@ -24,7 +24,7 @@
             <label for="Password">Password</label>
             <input name="Password" class="form-control" />
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             <label asp-for="CityId">City</label>
             <select asp-for="CityId" class="form-control" id="CityName">
                 @foreach (var city in AppUserDetailsViewModel.CitiesList)
@@ -45,7 +45,7 @@
 
                 }
             </select>
-        </div>
+        </div>*@
         <div class="form-group">
             <label class="control-label">Country</label>
             <select class="form-control" id="Country" name="Country" asp-for="CountryName">
@@ -96,7 +96,7 @@
 
     <script>
         $(document).ready(function () {
-            debugger;
+            //debugger;
             $("#City").prop("disabled", true);
             $("#Country").change(function () {
                 if ($("Country").val() != "Select") {

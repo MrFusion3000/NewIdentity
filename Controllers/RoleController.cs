@@ -38,6 +38,16 @@ namespace Identity.Controllers
             return View(name);
         }
 
+        public IActionResult Admin()
+        {
+            return Redirect("/Admin/Index");
+        }
+
+        public IActionResult Claims()
+        {
+            return Redirect("/Claims/Index");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {

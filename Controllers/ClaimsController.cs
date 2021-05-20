@@ -25,6 +25,16 @@ namespace Identity.Controllers
 
         public ViewResult Create() => View();
 
+        public IActionResult Admin()
+        {
+            return Redirect("/Admin/Index");
+        }
+
+        public IActionResult Role()
+        {
+            return Redirect("/Role/Index");
+        }
+
         [HttpPost]
         [ActionName("Create")]
         public async Task<IActionResult> Create_Post(string claimType, string claimValue)

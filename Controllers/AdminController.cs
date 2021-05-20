@@ -36,13 +36,23 @@ namespace Identity.Controllers
             return View(userManager.Users);
         }
 
+        public IActionResult Role()
+        {
+            return Redirect("/Role/Index");
+        }
+
+        public IActionResult Claims()
+        {
+            return Redirect("/Claims/Index");
+        }
+
         public ViewResult Create()
         {
             //var Countries = AppUserDetailsViewModel.CountriesList;
 
             List<SelectListItem> countries = new List<SelectListItem>();
 
-            countries.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
+            countries.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString(), Disabled=true });
             var countriesFilter = from country in _context.Countries
                                   select country;
             foreach (var item in countriesFilter)
@@ -88,8 +98,6 @@ namespace Identity.Controllers
                         ModelState.AddModelError("", error.Description);
                 }
             }
-
-            //return View(user);
             return RedirectToAction("Index");
 
         }
@@ -98,7 +106,7 @@ namespace Identity.Controllers
         {
             List<SelectListItem> cities = new List<SelectListItem>();
 
-            cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString() });
+            cities.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString(), Disabled=true });
 
             var citiesFilter = from city in _context.Cities
                                where city.CountryID == Guid.Parse(id)
@@ -117,9 +125,6 @@ namespace Identity.Controllers
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
-                
-
-
                 return View(user);
             }
             else

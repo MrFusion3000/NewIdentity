@@ -68,7 +68,7 @@ namespace Identity.Models
 
             //set countries
             var CountryGuid0 = Guid.NewGuid();
-            var CountryGuid1 = Guid.NewGuid();
+            var CountryGuid1 = InitUserCityId;
             var CountryGuid2 = Guid.NewGuid();
             //set cities
             var CityGuid1 = Guid.NewGuid();

@@ -4,11 +4,20 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    if (User.IsInRole("Admin"))
+    if (User.IsInRole("SuperAdmin"))
     {
-        <p>
-            <a asp-action="Create" class="btn btn-secondary">Create a Role</a>
-        </p>
+        if (User.IsInRole("SuperAdmin"))
+        {
+            <div class="container-fluid">
+                <ul>
+                    <li> <a asp-action="Create" class="btn btn-secondary">Create a Role</a></li>
+                    <li><a asp-action="Admin" class="btn btn-secondary">Admin</a></li>
+                    <li><a asp-action="Claims" class="btn btn-secondary">Claims</a></li>
+                    <li><a asp-controller="Account" asp-action="Logout" class="btn btn-danger right">Logout</a></li>
+                </ul>
+            </div>
+        }
+
 
         <table class="table table-sm table-bordered table-bordered">
             <tr><th>ID</th><th>Name</th><th>Users</th><th>Update</th><th>Delete</th></tr>
