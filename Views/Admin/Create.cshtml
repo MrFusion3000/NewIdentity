@@ -21,7 +21,7 @@
         <label asp-for="Password"></label>
         <input asp-for="Password" class="form-control" />
     </div>
-    <div class="form-group">
+    @*<div class="form-group">*@
 
         <div class="form-group">
             <label class="control-label">Country</label>
@@ -29,7 +29,7 @@
                     asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName" ))"></select>
 
         </div>
-    </div>
+    @*</div>*@
     <br />
     <div class="form-group">
         <label class="control-label">City</label>

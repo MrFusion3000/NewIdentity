@@ -46,21 +46,31 @@ namespace Identity.Controllers
             return Redirect("/Claims/Index");
         }
 
+        public IActionResult Countries()
+        {
+            return Redirect("/Countries/Index");
+        }
+
+        public IActionResult Cities()
+        {
+            return Redirect("/Cities/Index");
+        }
+
         public ViewResult Create()
         {
             //var Countries = AppUserDetailsViewModel.CountriesList;
 
-            List<SelectListItem> countries = new List<SelectListItem>();
+            //List<SelectListItem> countries = new List<SelectListItem>();
 
-            countries.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString(), Disabled=true });
-            var countriesFilter = from country in _context.Countries
-                                  select country;
-            foreach (var item in countriesFilter)
-            {
-                countries.Add(new SelectListItem { Text = item.CountryName, Value = item.Id.ToString("D") });
-            }
+            //countries.Add(new SelectListItem { Text = "Select", Value = Guid.Empty.ToString(), Disabled=true });
+            //var countriesFilter = from country in _context.Countries
+            //                      select country;
+            //foreach (var item in countriesFilter)
+            //{
+            //    countries.Add(new SelectListItem { Text = item.CountryName, Value = item.Id.ToString("D") });
+            //}
 
-            ViewData["Countries"] = new SelectList(countries, "Id", "CountryName");
+            //ViewData["Countries"] = new SelectList(countries, "Id", "CountryName");
 
             return View();
         }
