@@ -26,24 +26,23 @@
         </div>
         <div class="form-group">
             <label class="control-label">Country</label>
-            <select class="form-control" id="Country" name="Country" asp-for="CountryName">
+            <select class="form-control" id="Country" name="CountryId" asp-for="CountryId">
                     @foreach (var country in AppUserDetailsViewModel.CountriesList)
-                {
-                    if (country.Id == Model.CityId)
-
                     {
-                        <option selected="selected" value="@country.Id">
-                            @country.CountryName
-                        </option>
-                    }
-                    else
-                    {
+                        if (city.Id == Model.CityId)
+                        {
+                            <option selected="selected" value="@country.Id">
+                                @country.CountryName
+                            </option>
+                        }
+                        else
+                        {
                         <option value="@country.Id">
                             @country.CountryName
                         </option>
+                        }
                     }
-
-                }</select>
+            </select>
         </div>
         <br />
         <div class="form-group">
@@ -52,7 +51,6 @@
                 @foreach (var city in AppUserDetailsViewModel.CitiesList)
                 {
                     if (city.Id == Model.CityId)
-
                     {
                         <option selected="selected" value="@city.Id">
                             @city.CityName
@@ -64,7 +62,6 @@
                             @city.CityName
                         </option>
                     }
-
                 }
             </select>
         </div>
@@ -75,7 +72,7 @@
     <script>
         $(document).ready(function () {
             //debugger;
-            $("#City").prop("disabled", true);
+            $("#City").prop("disabled", false);
             $("#Country").change(function () {
                 if ($("Country").val() != "Select") {
                     var id = $(this).find(":selected").val()
@@ -94,7 +91,7 @@
                         $("#City").prop("disabled", false);
                     };
                     CountryOptions.error = function () {
-                        alert("Error in Getting States!!");
+                        alert("Error in Getting citites!!");
                     };
                     $.ajax(CountryOptions);
                 } else {

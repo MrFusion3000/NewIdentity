@@ -19,7 +19,18 @@
             </ul>
         </div>
     }
+    else
+    {
+        <div class="container-fluid">
+            Hi @User.Identity.Name, you're only a regular user so all you see is this useless userslist.
+            <ul>                
+                <li><a asp-controller="Account" asp-action="Logout" class="btn btn-danger right">Logout</a></li>
+            </ul>
+        </div>
+    }
 }
+
+
 <table class="table table-sm table-bordered">
     @if (User.Identity.IsAuthenticated)
     {

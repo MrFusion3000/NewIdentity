@@ -12,8 +12,11 @@ namespace Identity.Models
         //public virtual City City { get; set; }
 
         [NotMapped]
+        public string CountryId { get; internal set; }
+        [NotMapped]
         public string CountryName { get; internal set; }
         [NotMapped]
         public string CityName { get; internal set; }
+
     }
 }

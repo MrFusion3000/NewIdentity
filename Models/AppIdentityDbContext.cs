@@ -26,10 +26,10 @@ namespace Identity.Models
                 .HasIndex(u => u.Id)
                 .IsUnique();
 
+            var InitUserCityId = Guid.Parse("258d7621e0db4958a098c400c8c9e0a4");
+
             string ADMIN_ID = "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6";
             string ROLE_ID =  "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf";
-            //string CITY_ID =  "341a43f0asa242deaabf59kmdkmd74c3";
-            var InitUserCityId = Guid.Parse("258d7621e0db4958a098c400c8c9e0a4");
 
             //seed admin role
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
