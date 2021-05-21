@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Identity.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,19 +45,6 @@ namespace Identity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CityName = table.Column<string>(nullable: true),
-                    CountryID = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,6 +165,25 @@ namespace Identity.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CityName = table.Column<string>(nullable: true),
+                    CountryID = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_Countries_CountryID",
+                        column: x => x.CountryID,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -186,33 +192,33 @@ namespace Identity.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "CityId", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6", 0, new Guid("b9d13f75-e69c-452e-93a9-fb31c31d9bd6"), "7b5d79e0-e200-4bb8-ae24-a13211b1fe31", "nico@crepro.com", true, false, null, "nico@crepro.com", "nico", "AQAAAAEAACcQAAAAEDSVkSJiFsZWdNlq3rSxJaN6A+dJPcu7J1iyyBazo7dbun5/4RvuXqppQg0Q5HWfrw==", null, false, "03af6fff-5935-4050-a59c-033196c93e14", false, "nico" });
-
-            migrationBuilder.InsertData(
-                table: "Cities",
-                columns: new[] { "Id", "CityName", "CountryID" },
-                values: new object[,]
-                {
-                    { new Guid("dbbe01da-d622-4cd1-ae0d-7f51eb90a779"), "Select", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { new Guid("dd51cf28-4765-418a-919a-eae75c9f9f03"), "Stockholm", new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b") },
-                    { new Guid("258d7621-e0db-4958-a098-c400c8c9e0a4"), "Göteborg", new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b") },
-                    { new Guid("f547f442-382b-4abf-8672-fe30f80d4cd1"), "Oslo", new Guid("323795fc-498b-4c06-8f25-488ee3916c9d") },
-                    { new Guid("c569fa64-dc4a-48e2-8c98-3ef4ec60dff6"), "Halden", new Guid("323795fc-498b-4c06-8f25-488ee3916c9d") }
-                });
+                values: new object[] { "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6", 0, new Guid("258d7621-e0db-4958-a098-c400c8c9e0a4"), "cf434e29-9717-4d29-87b5-fb7173badeb6", "nico@crepro.com", true, false, null, "nico@crepro.com", "nico", "AQAAAAEAACcQAAAAEKYI1n+wGMlpd90vsaxAKWl01gh5KLgJR5/pSy5koDHMFFAs14M6TOd9JylYHGSJ9Q==", null, false, "c13abf18-bbe4-4bee-b6e5-72ed6439d877", false, "nico" });
 
             migrationBuilder.InsertData(
                 table: "Countries",
                 columns: new[] { "Id", "CountryName" },
                 values: new object[,]
                 {
-                    { new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b"), "Sweden" },
-                    { new Guid("323795fc-498b-4c06-8f25-488ee3916c9d"), "Norway" }
+                    { new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923"), "Sweden" },
+                    { new Guid("1122b090-5363-4736-9fba-e5f64925c0f5"), "Norway" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[] { "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6", "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "CityName", "CountryID" },
+                values: new object[,]
+                {
+                    { new Guid("258d7621-e0db-4958-a098-c400c8c9e0a4"), "Deje", new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923") },
+                    { new Guid("65544054-4b6a-433e-ade6-f12acbc0b15f"), "Stockholm", new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923") },
+                    { new Guid("635bcf53-15cc-41df-a967-1f3846858c53"), "Göteborg", new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923") },
+                    { new Guid("efbbec24-6066-40c5-8eb4-c11dfb302aa4"), "Oslo", new Guid("1122b090-5363-4736-9fba-e5f64925c0f5") },
+                    { new Guid("b6fce03c-d7bb-4ff3-837e-e489e232167d"), "Halden", new Guid("1122b090-5363-4736-9fba-e5f64925c0f5") }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -254,16 +260,9 @@ namespace Identity.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_Id",
+                name: "IX_Cities_CountryID",
                 table: "Cities",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Countries_Id",
-                table: "Countries",
-                column: "Id",
-                unique: true);
+                column: "CountryID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -287,13 +286,13 @@ namespace Identity.Migrations
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
         }
     }
 }

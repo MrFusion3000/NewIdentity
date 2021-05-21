@@ -24,12 +24,12 @@
             <label for="Password">Password</label>
             <input name="Password" class="form-control" />
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="control-label">Country</label>
             <select class="form-control" id="Country" name="CountryId" asp-for="CountryId">
                     @foreach (var country in AppUserDetailsViewModel.CountriesList)
                     {
-                        if (city.Id == Model.CityId)
+                        if (country.CountryName == Model.CountryName)
                         {
                             <option selected="selected" value="@country.Id">
                                 @country.CountryName
@@ -43,7 +43,7 @@
                         }
                     }
             </select>
-        </div>
+        </div>*@
         <br />
         <div class="form-group">
             <label class="control-label">City</label>

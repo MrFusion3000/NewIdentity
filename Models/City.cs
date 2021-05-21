@@ -12,5 +12,7 @@ namespace Identity.Models
         public Guid Id { get; set; }
         public string CityName { get; set; }
         public Guid CountryID { get; set; }
+
+        public Country CurrentCountry { get; set; }
     }
 }

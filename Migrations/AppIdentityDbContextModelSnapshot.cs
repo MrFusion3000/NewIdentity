@@ -15,7 +15,7 @@ namespace Identity.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.12")
+                .HasAnnotation("ProductVersion", "3.1.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -91,16 +91,16 @@ namespace Identity.Migrations
                         {
                             Id = "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            CityId = new Guid("b9d13f75-e69c-452e-93a9-fb31c31d9bd6"),
-                            ConcurrencyStamp = "7b5d79e0-e200-4bb8-ae24-a13211b1fe31",
+                            CityId = new Guid("258d7621-e0db-4958-a098-c400c8c9e0a4"),
+                            ConcurrencyStamp = "cf434e29-9717-4d29-87b5-fb7173badeb6",
                             Email = "nico@crepro.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "nico@crepro.com",
                             NormalizedUserName = "nico",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDSVkSJiFsZWdNlq3rSxJaN6A+dJPcu7J1iyyBazo7dbun5/4RvuXqppQg0Q5HWfrw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKYI1n+wGMlpd90vsaxAKWl01gh5KLgJR5/pSy5koDHMFFAs14M6TOd9JylYHGSJ9Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "03af6fff-5935-4050-a59c-033196c93e14",
+                            SecurityStamp = "c13abf18-bbe4-4bee-b6e5-72ed6439d877",
                             TwoFactorEnabled = false,
                             UserName = "nico"
                         });
@@ -120,41 +120,40 @@ namespace Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasIndex("CountryID");
 
                     b.ToTable("Cities");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dbbe01da-d622-4cd1-ae0d-7f51eb90a779"),
-                            CityName = "Select",
-                            CountryID = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("dd51cf28-4765-418a-919a-eae75c9f9f03"),
-                            CityName = "Stockholm",
-                            CountryID = new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b")
-                        },
-                        new
-                        {
                             Id = new Guid("258d7621-e0db-4958-a098-c400c8c9e0a4"),
+                            CityName = "Deje",
+                            CountryID = new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923")
+                        },
+                        new
+                        {
+                            Id = new Guid("65544054-4b6a-433e-ade6-f12acbc0b15f"),
+                            CityName = "Stockholm",
+                            CountryID = new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923")
+                        },
+                        new
+                        {
+                            Id = new Guid("635bcf53-15cc-41df-a967-1f3846858c53"),
                             CityName = "Göteborg",
-                            CountryID = new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b")
+                            CountryID = new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923")
                         },
                         new
                         {
-                            Id = new Guid("f547f442-382b-4abf-8672-fe30f80d4cd1"),
+                            Id = new Guid("efbbec24-6066-40c5-8eb4-c11dfb302aa4"),
                             CityName = "Oslo",
-                            CountryID = new Guid("323795fc-498b-4c06-8f25-488ee3916c9d")
+                            CountryID = new Guid("1122b090-5363-4736-9fba-e5f64925c0f5")
                         },
                         new
                         {
-                            Id = new Guid("c569fa64-dc4a-48e2-8c98-3ef4ec60dff6"),
+                            Id = new Guid("b6fce03c-d7bb-4ff3-837e-e489e232167d"),
                             CityName = "Halden",
-                            CountryID = new Guid("323795fc-498b-4c06-8f25-488ee3916c9d")
+                            CountryID = new Guid("1122b090-5363-4736-9fba-e5f64925c0f5")
                         });
                 });
 
@@ -169,20 +168,17 @@ namespace Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.ToTable("Countries");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4f64eda2-695a-4df0-a986-6104f2553c5b"),
+                            Id = new Guid("f26c76d2-68f2-4cd0-b597-e1896e498923"),
                             CountryName = "Sweden"
                         },
                         new
                         {
-                            Id = new Guid("323795fc-498b-4c06-8f25-488ee3916c9d"),
+                            Id = new Guid("1122b090-5363-4736-9fba-e5f64925c0f5"),
                             CountryName = "Norway"
                         });
                 });
@@ -332,6 +328,15 @@ namespace Identity.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Identity.Models.City", b =>
+                {
+                    b.HasOne("Identity.Models.Country", "CurrentCountry")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

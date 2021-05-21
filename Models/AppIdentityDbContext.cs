@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Identity.Models
 {
@@ -19,17 +20,17 @@ namespace Identity.Models
 
             modelBuilder.Entity<Country>().ToTable("Countries");
             modelBuilder.Entity<City>().ToTable("Cities");
-            modelBuilder.Entity<Country>()
-                .HasIndex(u => u.Id)
-                .IsUnique();
-            modelBuilder.Entity<City>()
-                .HasIndex(u => u.Id)
-                .IsUnique();
+            //modelBuilder.Entity<Country>()
+            //    .HasIndex(u => u.Id)
+            //    .IsUnique();
+            //modelBuilder.Entity<City>()
+            //    .HasIndex(u => u.Id)
+            //    .IsUnique();
 
             var InitUserCityId = Guid.Parse("258d7621e0db4958a098c400c8c9e0a4");
 
             string ADMIN_ID = "02174cf0 - 9412 - 4cfe - afbf - 59f706d72cf6";
-            string ROLE_ID =  "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf";
+            string ROLE_ID = "341743f0 - asd2 - 42de - afbf - 59kmkkmk72cf";
 
             //seed admin role
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
@@ -68,24 +69,22 @@ namespace Identity.Models
 
             //set countries
             var CountryGuid0 = Guid.NewGuid();
-            var CountryGuid1 = InitUserCityId;
+            var CountryGuid1 = Guid.NewGuid();
             var CountryGuid2 = Guid.NewGuid();
             //set cities
-            var CityGuid1 = Guid.NewGuid();
+            var CityGuid1 = InitUserCityId;
             var CityGuid2 = Guid.NewGuid();
             var CityGuid3 = Guid.NewGuid();
             var CityGuid4 = Guid.NewGuid();
             var CityGuid5 = Guid.NewGuid();
 
             modelBuilder.Entity<Country>().HasData(
-                new Country { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), CountryName = "Select" },
-                new Country { Id = CountryGuid1, CountryName = "Sweden" },
+                new Country { Id = CountryGuid1, CountryName = "Sweden", },
                 new Country { Id = CountryGuid2, CountryName = "Norway" }
                 );
 
             //set cities
             modelBuilder.Entity<City>().HasData(
-                new City {Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), CityName = "Select", CountryID = Guid.Empty },
                 new City {Id = CityGuid1, CityName = "Deje", CountryID = CountryGuid1 },
                 new City {Id = CityGuid2, CityName = "Stockholm", CountryID = CountryGuid1 },
                 new City {Id = CityGuid3, CityName = "Göteborg", CountryID = CountryGuid1 },
