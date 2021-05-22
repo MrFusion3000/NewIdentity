@@ -42,7 +42,14 @@ namespace Identity.Controllers
         {
             return Redirect("/Admin/Index");
         }
-
+        public IActionResult Countries()
+        {
+            return Redirect("/Countries/Index");
+        }
+        public IActionResult Cities()
+        {
+            return Redirect("/Cities/Index");
+        }
         public IActionResult Claims()
         {
             return Redirect("/Claims/Index");

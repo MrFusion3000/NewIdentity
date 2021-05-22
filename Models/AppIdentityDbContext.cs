@@ -45,12 +45,12 @@ namespace Identity.Models
             var appUser = new AppUser
             {
                 Id = ADMIN_ID,
-                Email = "nico@crepro.com",
+                Email = "kenny@logins.com",
                 EmailConfirmed = true,
-                NormalizedEmail = "nico@crepro.com",
-                NormalizedUserName = "nico",
+                NormalizedEmail = "kenny@logins.com",
+                NormalizedUserName = "kenny",
                 CityId = InitUserCityId,
-                UserName = "nico"
+                UserName = "Kenny"
             };
 
             //set user password

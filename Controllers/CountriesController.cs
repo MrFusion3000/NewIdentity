@@ -24,6 +24,23 @@ namespace Identity.Views.Countries
             return View(await _context.Countries.ToListAsync());
         }
 
+        public IActionResult Admin()
+        {
+            return Redirect("/Admin/Index");
+        }
+        public IActionResult Role()
+        {
+            return Redirect("/Role/Index");
+        }
+        public IActionResult Claims()
+        {
+            return Redirect("/Claims/Index");
+        }
+        public IActionResult Cities()
+        {
+            return Redirect("/Cities/Index");
+        }
+
         // GET: Countries/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

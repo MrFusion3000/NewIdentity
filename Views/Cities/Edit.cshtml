@@ -4,9 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>City</h4>
+<h1 class="bg-info text-white">Edit City</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,8 +17,14 @@
                 <span asp-validation-for="CityName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CountryID" class="control-label"></label>
-                <input asp-for="CountryID" class="form-control" />
+                @*<label asp-for="CountryID" class="control-label"></label>*@
+                @*<input asp-for="CountryID" class="form-control" />*@
+                <div class="form-group">
+                    <label class="control-label">Country</label>
+                    <select class="form-control" id="CountryID" name="CountryID" asp-for="CountryID"
+                            asp-items="@(new SelectList(AppUserDetailsViewModel.CountriesList, "Id", "CountryName" ))"></select>
+
+                </div>
                 <span asp-validation-for="CountryID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,6 +35,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>
 

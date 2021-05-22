@@ -1,0 +1,23 @@
+﻿if (User.IsInRole("SuperAdmin"))
+    {
+<div class="container-fluid">
+    <ul>
+        <li> <a asp-action="Create" class="btn btn-primary">Create a User</a></li>
+        <li><a asp-action="Countries" class="btn btn-primary">Admin Countries</a></li>
+        <li><a asp-action="Cities" class="btn btn-primary">Admin Cities</a></li>
+        <li><a asp-action="Role" class="btn btn-primary">Role</a></li>
+        <li><a asp-action="Claims" class="btn btn-primary">Claims</a></li>
+        <li><a asp-controller="Account" asp-action="Logout" class="btn btn-danger right">Logout</a></li>
+    </ul>
+</div>
+    }
+    else
+    {
+<div class="container-fluid">
+    Hi @User.Identity.Name, you're only a regular user so all you see is this useless userslist.
+    <ul>
+        <li><a asp-controller="Account" asp-action="Logout" class="btn btn-danger right">Logout</a></li>
+    </ul>
+</div>
+    }
+}
